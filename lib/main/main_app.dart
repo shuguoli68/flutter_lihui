@@ -9,7 +9,6 @@ class MainApp extends StatefulWidget{
 class _MainApp extends State<MainApp>{
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return WillPopScope(
         child: Scaffold(
             body: MainNavigation()

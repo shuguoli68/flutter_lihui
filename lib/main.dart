@@ -34,13 +34,19 @@ class _MyHomePageState extends State<MyHomePage> {
   var timer;
 
   Widget goTo() {
-    SharedPreferences prefs = SharedPreferences.getInstance() as SharedPreferences;
-    var isLogin = prefs.getBool(SharePreName().IS_LOGIN) ?? false;
-    if(isLogin){
+//    Future<bool> isLogin = _getIsLogin();
+    if(true){
       return MainApp();
     }else{
       return Login();
     }
+  }
+
+  _getIsLogin() async {
+    scheduleMicrotask(()async{
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      return await prefs.getBool(SharePreName().IS_LOGIN) ?? false;
+    });
   }
 
   @override

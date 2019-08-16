@@ -7,6 +7,7 @@ import 'package:flutter_lihui/json_entity_model/test_entity.dart';
 import 'package:flutter_lihui/main/main_app.dart';
 import 'package:flutter_lihui/common/navigator_push.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:async';
 
 class Login extends StatefulWidget{
   @override
@@ -75,15 +76,8 @@ class _Login extends State<Login>{
                       child: Text('登录'),
                       color: Theme.of(context).primaryColor,
                       textColor: Colors.white,
-                      onPressed: (){
-                        if((_key.currentState as FormState).validate()){
-                          //验证通过提交数据
-                          print('登录 name:${name},pwd:${pwd}');
-                          SharedPreferences prefs = SharedPreferences.getInstance() as SharedPreferences;
-                          prefs.setBool(SharePreName().IS_LOGIN, true);
-                          PushHelper().goAndFinish(context, MainApp());
-                        }
-                      },))
+                      onPressed: login,
+                    ))
                   ],
                 ),
               ),
@@ -106,6 +100,16 @@ class _Login extends State<Login>{
     if(data.isSuccess){
 //      TestEntity bean = EntityFactory.generateOBJ<TestEntity>(data.data);
       print('解析成功：');
+    }
+  }
+
+  void login() async {
+    if((_key.currentState as FormState).validate()){
+      //验证通过提交数据
+      print('登录 name:${name},pwd:${pwd}');
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setBool(SharePreName().IS_LOGIN, true);
+      PushHelper().goAndFinish(context, MainApp());
     }
   }
 }
