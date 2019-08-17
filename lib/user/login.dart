@@ -76,7 +76,7 @@ class _Login extends State<Login>{
                       child: Text('登录'),
                       color: Theme.of(context).primaryColor,
                       textColor: Colors.white,
-                      onPressed: login,
+                      onPressed: _login,
                     ))
                   ],
                 ),
@@ -99,12 +99,21 @@ class _Login extends State<Login>{
     ResultData data = await Api.loadUsers();
     if(data.isSuccess){
 //      TestEntity bean = EntityFactory.generateOBJ<TestEntity>(data.data);
-      print('解析成功：');
+      print('解析成功：'+data.data.toString());
     }
   }
 
-  void login() async {
+  void userList(int pageIndex) async {
+    ResultData data = await Api.userList(pageIndex);
+    if(data.isSuccess){
+//      TestEntity bean = EntityFactory.generateOBJ<TestEntity>(data.data);
+      print('解析成功：'+data.data.toString());
+    }
+  }
+
+  _login() async {
     if((_key.currentState as FormState).validate()){
+      userList(name.length);
       //验证通过提交数据
       print('登录 name:${name},pwd:${pwd}');
       SharedPreferences prefs = await SharedPreferences.getInstance();

@@ -12,18 +12,35 @@ class _MainHme extends State<MainHome>{
   static const listMax = 100;//列表最多加载条数
   static const loadingTag = "##loading##";//正在加载
   var _list =<String>[loadingTag];
+  ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener((){
+      if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent){
+        //滑到底部，加载更多...
+        _loadData(false);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: NestedScrollView(
-          headerSliverBuilder: _sliverBuilder,
-          body: ListView.separated(
+      body: RefreshIndicator(
+        child: NestedScrollView(
+            headerSliverBuilder: _sliverBuilder,
+            body: ListView.separated(
               itemBuilder: _itemBuilder,
               separatorBuilder: (context,index){
                 return Divider(color: Colors.blue,);
               },
-              itemCount: _list.length
-          )
+              itemCount: _list.length,
+              controller: _scrollController,
+            )
+        ),
+        onRefresh: _onfresh
       )
     );
   }
@@ -46,7 +63,6 @@ class _MainHme extends State<MainHome>{
               'http://img5.duitang.com/uploads/item/201404/11/20140411214939_XswXa.jpeg',
             ],
             buildShowView: (index,data){
-              print(data);
               return Image.network(data,fit: BoxFit.cover,);
             },
             onBannerClickListener: (index,data){
@@ -59,10 +75,14 @@ class _MainHme extends State<MainHome>{
     ];
   }
 
+  Future<void> _onfresh() {
+    _loadData(true);
+  }
+
   Widget _itemBuilder(BuildContext context, int index){
     if(_list[index] == loadingTag){//加载中...
       if(_list.length < listMax){
-        _loadData(false);
+          _loadData(false);
         return Container(
           padding: EdgeInsets.all(20.0),
           alignment: Alignment.center,
@@ -84,16 +104,21 @@ class _MainHme extends State<MainHome>{
   void _loadData(bool isRefresh) {
     Future.delayed(Duration(seconds: 2))
         .then((e) { //每次生成20个单词
-      _list.insertAll(
-          _list.length-1,
-          generateWordPairs()
-              .take(20)
-              .map((t)=>t.asPascalCase)
-              .toList()
-      );
       setState(() {
-
+        if(isRefresh) {
+          _list.clear();
+          _list.add(loadingTag);
+        }
+        _list.insertAll(
+            _list.length-1,
+            generateWordPairs()
+                .take(20)
+                .map((t)=>t.asPascalCase)
+                .toList()
+        );
+        return _list;
       });
     });
   }
+
 }

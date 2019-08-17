@@ -23,4 +23,11 @@ class Api {
     var params = DataHelper.getBaseMap();
     return HttpManager.getInstance().get(Address.BASE_URL_RELEASE+'loadAll/', params);
   }
+
+  static userList(int pageIndex) {
+    var params = DataHelper.getBaseMap();
+    params['pageIndex'] = pageIndex;
+    params['pageNumber'] = 2;
+    return HttpManager.getInstance().post(Address.BASE_URL_RELEASE+'userList', params);
+  }
 }
