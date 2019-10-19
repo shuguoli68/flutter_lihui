@@ -12,6 +12,7 @@ class ResultError{
   var e;
 
   ResultError(this.e){
-    print('ResultError:'+e);
+    print('ResultError:');
+    print(e);
   }
 }

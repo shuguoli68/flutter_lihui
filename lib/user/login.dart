@@ -4,9 +4,14 @@ import 'package:flutter_lihui/entity_factory.dart';
 import 'package:flutter_lihui/http/api.dart';
 import 'package:flutter_lihui/http/result_data.dart';
 import 'package:flutter_lihui/json_entity_model/test_entity.dart';
+import 'package:flutter_lihui/json_entity_model/user_entity.dart';
+import 'package:flutter_lihui/json_entity_model/account_entity.dart';
 import 'package:flutter_lihui/main/main_app.dart';
 import 'package:flutter_lihui/common/navigator_push.dart';
+import 'package:flutter_lihui/common/base_data.dart';
+import 'package:flutter_lihui/common/my_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:async';
 
 class Login extends StatefulWidget{
@@ -51,9 +56,9 @@ class _Login extends State<Login>{
                     prefixIcon: Icon(Icons.person)
                 ),
                 controller: _controller1,
-                validator: (v){
-                  return v.trim().length>0 ? null : '用户名不能为空';
-                },
+//                validator: (v){
+//                  return v.trim().length>0 ? null : '用户名不能为空';
+//                },
               ),
               TextFormField(
                 decoration: InputDecoration(
@@ -63,9 +68,9 @@ class _Login extends State<Login>{
                 ),
                 controller: _controller2,
                 obscureText: true,
-                validator: (v){
-                  return v.trim().length <= 6 ? null : '密码为六位';
-                },
+//                validator: (v){
+//                  return v.trim().length <= 6 ? null : '密码为六位';
+//                },
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 30.0,left: 5.0,right: 5.0),
@@ -113,12 +118,24 @@ class _Login extends State<Login>{
 
   _login() async {
     if((_key.currentState as FormState).validate()){
-      userList(name.length);
-      //验证通过提交数据
-      print('登录 name:${name},pwd:${pwd}');
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setBool(SharePreName().IS_LOGIN, true);
-      PushHelper().goAndFinish(context, MainApp());
+      ResultData data = await Api.login(name, pwd);
+      if(data.isSuccess) {
+        AccountEntity bean = EntityFactory.generateOBJ<AccountEntity>(data.data);
+        if(bean.code == 200) {
+          //验证通过提交数据
+          MyConfig().userId = bean.data.userId;
+          print('登录 name:${name},pwd:${pwd},bean:${bean.toJson()}');
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setBool(SharePreName().IS_LOGIN, true);
+          PushHelper().goAndFinish(context, MainApp());
+        }else{
+          print(bean.msg);
+          Fluttertoast.showToast(msg: bean.msg);
+        }
+      }else{
+        print('服务器错误:'+data.code.toString());
+        Fluttertoast.showToast(msg: '服务器错误:'+data.code.toString());
+      }
     }
   }
 }
