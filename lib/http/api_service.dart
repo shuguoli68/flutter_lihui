@@ -19,32 +19,14 @@ class ApiService{
     return _headerMap;
   }
 
-  static Future<Map> base(String url, Map req,)async{
-    var json = await HttpUtils.request(
-        url,
-        method: HttpUtils.GET,
-        data: req,
-        header: _headerMap,
+  static Future<Response> base(String url, {Map<String, dynamic> req})async{
+    var data = convert.jsonEncode(req);
+    var response = await HttpUtils.request(
+      url,
+      method: HttpUtils.POST,
+      data: data,
+      header: _getHeader(),
     );
-    return json;
-  }
-
-  static Future<Response> basePost(String url, {String req})async{
-    var response;
-    try {
-//      StringBuffer r = StringBuffer('{');
-//      for(int i = 0; i < req.fields.length; i++){
-//        r.write('"' + req.fields[i].key + '"');
-//        r.write(':"' + req.fields[i].value + '",');
-//      }
-//      r.write('}');
-//      print('post请求参数：' + r.toString());
-      response = await Dio().post(Api.baseUrl + url, data: req, options: Options(headers: _getHeader()));
-      print('post响应数据：' + response.toString());
-    }on DioError catch (e) {
-      /// 打印请求失败相关信息
-      print('post请求出错：' + e.toString());
-    }
     return response;
   }
 
@@ -53,10 +35,10 @@ class ApiService{
   ///
   static Future<Response> login(String username, String password)async{
     Map<String, dynamic> req = {
-      'username':username,
-      'password':password
+      'userId':username,
+      'passWord':password
     };
-    return basePost(Api.login, req: convert.jsonEncode(req));
+    return base(Api.login, req:req);
   }
 
 

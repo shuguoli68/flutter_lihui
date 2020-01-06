@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lihui/entity_factory.dart';
+import 'package:flutter_lihui/http/api.dart';
 import 'package:flutter_lihui/http/api_service.dart';
+import 'package:flutter_lihui/http/http_util.dart';
 import 'package:flutter_lihui/json_entity_model/login_entity.dart';
 import 'package:flutter_lihui/main/main_app.dart';
 import 'package:flutter_lihui/common/navigator_push.dart';
@@ -87,62 +89,29 @@ class _Login extends State<Login>{
     );
   }
 
-  void test() async {
-//    ResultData data = await Api.test();
-//    if(data.isSuccess){
-//      TestEntity bean = EntityFactory.generateOBJ<TestEntity>(data.data);
-//      print('解析成功：name='+bean.toString());
-//    }
-  }
-  void loadUsers() async {
-//    ResultData data = await Api.loadUsers();
-//    if(data.isSuccess){
-////      TestEntity bean = EntityFactory.generateOBJ<TestEntity>(data.data);
-//      print('解析成功：'+data.data.toString());
-//    }
-  }
-
-  void userList(int pageIndex) async {
-//    ResultData data = await Api.userList(pageIndex);
-//    if(data.isSuccess){
-////      TestEntity bean = EntityFactory.generateOBJ<TestEntity>(data.data);
-//      print('解析成功：'+data.data.toString());
-//    }
-  }
-
   _login() async {
     if((_key.currentState as FormState).validate()){
-      ApiService.login(name, pwd).then<Response>((value){
-        LoginEntity bean = EntityFactory.generateOBJ<LoginEntity>(value.data);
-        if(bean.code == 200) {
-          //验证通过提交数据
-          MyConfig().userId = bean.data.userId;
-          print('登录 name:${name},pwd:${pwd},bean:${bean.toJson()}');
-          PushHelper().goAndFinish(context, MainApp());
-        }else{
-          print(bean.msg);
-          Fluttertoast.showToast(msg: bean.msg);
-        }
-        return;
-      });
-//      ResultData data = await Api.login(name, pwd);
-//      if(data.isSuccess) {
-//        LoginEntity bean = EntityFactory.generateOBJ<LoginEntity>(data.data);
-//        if(bean.code == 200) {
-//          //验证通过提交数据
-//          MyConfig().userId = bean.data.userId;
-//          print('登录 name:${name},pwd:${pwd},bean:${bean.toJson()}');
-//          SharedPreferences prefs = await SharedPreferences.getInstance();
-//          prefs.setBool(SharePreName().IS_LOGIN, true);
-//          PushHelper().goAndFinish(context, MainApp());
-//        }else{
-//          print(bean.msg);
-//          Fluttertoast.showToast(msg: bean.msg);
-//        }
-//      }else{
-//        print('服务器错误:'+data.code.toString());
-//        Fluttertoast.showToast(msg: '服务器错误:'+data.code.toString());
-//      }
+    ApiService.login(name, pwd).then((response){
+      LoginEntity bean = EntityFactory.generateOBJ<LoginEntity>(response.data);
+      if(bean.code == 200) {
+        //验证通过提交数据
+        MyConfig().userId = bean.data.userId;
+        print('登录 name:${name},pwd:$pwd,bean:${bean.toJson()}');
+        PushHelper().goAndFinish(context, MainApp());
+      }else{
+        print(bean.msg);
+        Fluttertoast.showToast(msg: bean.msg);
+      }
+    });
+
     }
+  }
+
+  _test() async {
+    var result = await HttpUtils.request(
+        Api.test,
+        method: HttpUtils.GET
+    );
+    print('测试：$result');
   }
 }

@@ -34,7 +34,7 @@ class HttpUtils {
   static const String DELETE = 'delete';
 
   /// request method
-  static Future<Map> request (
+  static Future<Response> request (
       String url,
       { data, method , header}) async {
 
@@ -44,11 +44,11 @@ class HttpUtils {
     /// restful 请求处理
     /// /gysw/search/hist/:user_id        user_id=27
     /// 最终生成 url 为     /gysw/search/hist/27
-    data.forEach((key, value) {
-      if (url.indexOf(key) != -1) {
-        url = url.replaceAll(':$key', value.toString());
-      }
-    });
+//    data.forEach((key, value) {
+//      if (url.indexOf(key) != -1) {
+//        url = url.replaceAll(':$key', value.toString());
+//      }
+//    });
 
     /// 打印请求相关信息：请求地址、请求方式、请求参数
     LogUtil.d('请求地址：【' + method + '  ' + url + '】');
@@ -60,7 +60,7 @@ class HttpUtils {
     try {
       Response response = await dio.request(url, data: data, options: new Options(method: method,headers: header));
 
-      result = response.data;
+      result = response;
 
       /// 打印响应相关信息
       LogUtil.d('响应数据：' + response.toString());
