@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_lihui/entity_factory.dart';
 import 'package:flutter_lihui/http/api.dart';
-import 'package:flutter_lihui/http/result_data.dart';
 import 'package:flutter_lihui/json_entity_model/publish_entity.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -65,16 +64,16 @@ class _MainSend extends State<MainSend>{
 
 
   void _publish() async {
-    ResultData data = await Api.publish(title, content);
-    if(data.isSuccess) {
-      PublishEntity bean = EntityFactory.generateOBJ<PublishEntity>(data.data);
-      if (bean.code == 200) {
-        print('发布成功:'+bean.data.toString());
-        Fluttertoast.showToast(msg: '发布成功');
-      }
-    }else{
-      print('服务器错误:'+data.code.toString());
-      Fluttertoast.showToast(msg: '服务器错误:'+data.code.toString());
-    }
+//    ResultData data = await Api.publish(title, content);
+//    if(data.isSuccess) {
+//      PublishEntity bean = EntityFactory.generateOBJ<PublishEntity>(data.data);
+//      if (bean.code == 200) {
+//        print('发布成功:'+bean.data.toString());
+//        Fluttertoast.showToast(msg: '发布成功');
+//      }
+//    }else{
+//      print('服务器错误:'+data.code.toString());
+//      Fluttertoast.showToast(msg: '服务器错误:'+data.code.toString());
+//    }
   }
 }

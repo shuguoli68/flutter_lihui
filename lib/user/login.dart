@@ -1,18 +1,12 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_lihui/common/sharepre_name.dart';
 import 'package:flutter_lihui/entity_factory.dart';
-import 'package:flutter_lihui/http/api.dart';
-import 'package:flutter_lihui/http/result_data.dart';
-import 'package:flutter_lihui/json_entity_model/test_entity.dart';
-import 'package:flutter_lihui/json_entity_model/user_entity.dart';
-import 'package:flutter_lihui/json_entity_model/account_entity.dart';
+import 'package:flutter_lihui/http/api_service.dart';
+import 'package:flutter_lihui/json_entity_model/login_entity.dart';
 import 'package:flutter_lihui/main/main_app.dart';
 import 'package:flutter_lihui/common/navigator_push.dart';
-import 'package:flutter_lihui/common/base_data.dart';
 import 'package:flutter_lihui/common/my_config.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'dart:async';
 
 class Login extends StatefulWidget{
   @override
@@ -94,48 +88,61 @@ class _Login extends State<Login>{
   }
 
   void test() async {
-    ResultData data = await Api.test();
-    if(data.isSuccess){
-      TestEntity bean = EntityFactory.generateOBJ<TestEntity>(data.data);
-      print('解析成功：name='+bean.toString());
-    }
+//    ResultData data = await Api.test();
+//    if(data.isSuccess){
+//      TestEntity bean = EntityFactory.generateOBJ<TestEntity>(data.data);
+//      print('解析成功：name='+bean.toString());
+//    }
   }
   void loadUsers() async {
-    ResultData data = await Api.loadUsers();
-    if(data.isSuccess){
-//      TestEntity bean = EntityFactory.generateOBJ<TestEntity>(data.data);
-      print('解析成功：'+data.data.toString());
-    }
+//    ResultData data = await Api.loadUsers();
+//    if(data.isSuccess){
+////      TestEntity bean = EntityFactory.generateOBJ<TestEntity>(data.data);
+//      print('解析成功：'+data.data.toString());
+//    }
   }
 
   void userList(int pageIndex) async {
-    ResultData data = await Api.userList(pageIndex);
-    if(data.isSuccess){
-//      TestEntity bean = EntityFactory.generateOBJ<TestEntity>(data.data);
-      print('解析成功：'+data.data.toString());
-    }
+//    ResultData data = await Api.userList(pageIndex);
+//    if(data.isSuccess){
+////      TestEntity bean = EntityFactory.generateOBJ<TestEntity>(data.data);
+//      print('解析成功：'+data.data.toString());
+//    }
   }
 
   _login() async {
     if((_key.currentState as FormState).validate()){
-      ResultData data = await Api.login(name, pwd);
-      if(data.isSuccess) {
-        AccountEntity bean = EntityFactory.generateOBJ<AccountEntity>(data.data);
+      ApiService.login(name, pwd).then<Response>((value){
+        LoginEntity bean = EntityFactory.generateOBJ<LoginEntity>(value.data);
         if(bean.code == 200) {
           //验证通过提交数据
           MyConfig().userId = bean.data.userId;
           print('登录 name:${name},pwd:${pwd},bean:${bean.toJson()}');
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          prefs.setBool(SharePreName().IS_LOGIN, true);
           PushHelper().goAndFinish(context, MainApp());
         }else{
           print(bean.msg);
           Fluttertoast.showToast(msg: bean.msg);
         }
-      }else{
-        print('服务器错误:'+data.code.toString());
-        Fluttertoast.showToast(msg: '服务器错误:'+data.code.toString());
-      }
+        return;
+      });
+//      ResultData data = await Api.login(name, pwd);
+//      if(data.isSuccess) {
+//        LoginEntity bean = EntityFactory.generateOBJ<LoginEntity>(data.data);
+//        if(bean.code == 200) {
+//          //验证通过提交数据
+//          MyConfig().userId = bean.data.userId;
+//          print('登录 name:${name},pwd:${pwd},bean:${bean.toJson()}');
+//          SharedPreferences prefs = await SharedPreferences.getInstance();
+//          prefs.setBool(SharePreName().IS_LOGIN, true);
+//          PushHelper().goAndFinish(context, MainApp());
+//        }else{
+//          print(bean.msg);
+//          Fluttertoast.showToast(msg: bean.msg);
+//        }
+//      }else{
+//        print('服务器错误:'+data.code.toString());
+//        Fluttertoast.showToast(msg: '服务器错误:'+data.code.toString());
+//      }
     }
   }
 }

@@ -35,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget goTo() {
 //    Future<bool> isLogin = _getIsLogin();
-    if(true){
+    if(false){
       return MainApp();
     }else{
       return Login();
