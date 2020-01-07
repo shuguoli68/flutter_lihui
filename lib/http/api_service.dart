@@ -52,6 +52,16 @@ class ApiService{
     return base(Api.register, req:req);
   }
 
+  ///
+  ///退出登录
+  ///
+  static Future<Response> logout(String username)async{
+    Map<String, dynamic> req = {
+      'userId':username
+    };
+    return base(Api.logout, req:req);
+  }
+
 
 
 }

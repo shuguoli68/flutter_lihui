@@ -5,12 +5,12 @@ import 'package:flutter_lihui/http/api.dart';
 import 'package:flutter_lihui/http/api_service.dart';
 import 'package:flutter_lihui/http/http_util.dart';
 import 'package:flutter_lihui/json_entity_model/login_entity.dart';
-import 'package:flutter_lihui/main/main_app.dart';
+import 'package:flutter_lihui/view/main_app.dart';
 import 'package:flutter_lihui/common/my_config.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_lihui/common/my_public.dart';
 
-import 'register.dart';
+import 'package:flutter_lihui/view/sub/register.dart';
 
 class Login extends StatefulWidget{
   @override
@@ -33,6 +33,12 @@ class _Login extends State<Login>{
     });
     _controller2.addListener((){
       pwd = _controller2.text;
+    });
+    SPKey.spGetStr(SPKey.USER_NAME).then((value){
+      _controller1.text = value;
+    });
+    SPKey.spGetStr(SPKey.PASS_WORD).then((value){
+      _controller2.text = value;
     });
   }
   @override
@@ -120,10 +126,10 @@ class _Login extends State<Login>{
     ApiService.login(name, pwd).then((response){
       LoginEntity bean = EntityFactory.generateOBJ<LoginEntity>(response.data);
       if(bean.code == 200) {
-        myToast('登录成功');
         SPKey.spSetBool(SPKey.IS_LOGIN, true);
-        //验证通过提交数据
-        MyConfig().userId = bean.data.userId;
+        SPKey.spSetStr(SPKey.USER_NAME, bean.data.userId);
+        SPKey.spSetStr(SPKey.PASS_WORD, bean.data.passWord);
+        MyConfig.userId = bean.data.userId;
         print('登录 name:${name},pwd:$pwd,bean:${bean.toJson()}');
         goToRm(context, MainApp());
       }else{

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_lihui/main/main_app.dart';
-import 'package:flutter_lihui/user/login.dart';
+import 'package:flutter_lihui/view/main_app.dart';
+import 'package:flutter_lihui/view/sub/login.dart';
 import 'package:provide/provide.dart';
 import 'package:flutter_lihui/common/my_public.dart';
 
