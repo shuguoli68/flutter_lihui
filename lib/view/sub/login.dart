@@ -11,6 +11,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_lihui/common/my_public.dart';
 
 import 'package:flutter_lihui/view/sub/register.dart';
+import 'package:permission/permission.dart';
 
 class Login extends StatefulWidget{
   @override
@@ -40,6 +41,8 @@ class _Login extends State<Login>{
     SPKey.spGetStr(SPKey.PASS_WORD).then((value){
       _controller2.text = value;
     });
+
+    requestPermiss();
   }
   @override
   Widget build(BuildContext context) {
@@ -147,5 +150,15 @@ class _Login extends State<Login>{
         method: HttpUtils.GET
     );
     print('测试：$result');
+  }
+
+  requestPermiss() async {
+    //请求权限
+//    var permissions = await Permission.getPermissionsStatus([PermissionName.Calendar, PermissionName.Camera]);
+//    permissions.forEach((f){
+//    });
+    var permissionNames = await Permission.requestPermissions([PermissionName.Storage, PermissionName.Camera]);
+
+//    Permission.openSettings;
   }
 }

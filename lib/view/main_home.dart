@@ -142,6 +142,7 @@ class _MainHme extends BaseState<MainHome, HomePresenter> implements IHomeView{
   @override
   void onBanner(List<BannerItem> data) {
     print(data[0].toString());
+    mPresenter.download(data[0].imgPath);
   }
 
   @override

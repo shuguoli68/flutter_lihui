@@ -30,6 +30,15 @@ class ApiService{
     return response;
   }
 
+  static Future<Response> download(String fileName, String savePath)async{
+    Map<String, dynamic> req = {
+      "fileName":fileName
+    };
+    var data = convert.jsonEncode(req);
+    var response = await HttpUtils.createInstance().download(Api.baseUrl+Api.download, savePath, data: data);
+    return response;
+  }
+
   ///
   ///登录
   ///
