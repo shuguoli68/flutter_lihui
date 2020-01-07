@@ -62,6 +62,15 @@ class ApiService{
     return base(Api.logout, req:req);
   }
 
-
+  ///
+  ///获取首页banner
+  ///
+  static Future<Response> banner()async{
+    Map<String, dynamic> req = {
+      "pageNum": 0,
+      "pageSize": 10
+    };
+    return base(Api.banner, req:req);
+  }
 
 }

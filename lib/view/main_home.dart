@@ -1,29 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'package:banner/banner.dart';
+import 'package:flutter_lihui/base/base_state.dart';
+import 'package:flutter_lihui/contract/home_contract.dart';
+import 'package:flutter_lihui/json_entity_model/banner_entity.dart';
+import 'package:flutter_lihui/presenter/HomePresenter.dart';
 
 class MainHome extends StatefulWidget{
   @override
   State<StatefulWidget> createState() => _MainHme();
 }
 
-class _MainHme extends State<MainHome>{
+class _MainHme extends BaseState<MainHome, HomePresenter> implements IHomeView{
 
   static const listMax = 100;//列表最多加载条数
   static const loadingTag = "##loading##";//正在加载
   var _list =<String>[loadingTag];
   ScrollController _scrollController = ScrollController();
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollController.addListener((){
-      if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent){
-        //滑到底部，加载更多...
-        _loadData(false);
-      }
-    });
-  }
+  List<String> bannerStr;
 
   @override
   Widget build(BuildContext context) {
@@ -56,12 +50,7 @@ class _MainHme extends State<MainHome>{
           centerTitle: false,
           title: Text('热搜'),
           background: BannerView(
-            data: [
-              "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1531798262708&di=53d278a8427f482c5b836fa0e057f4ea&imgtype=0&src=http%3A%2F%2Fh.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F342ac65c103853434cc02dda9f13b07eca80883a.jpg",
-              'https://b-ssl.duitang.com/uploads/item/201709/26/20170926131419_8YhLA.jpeg',
-              'https://b-ssl.duitang.com/uploads/item/201510/14/20151014172010_RnJVz.jpeg',
-              'http://img5.duitang.com/uploads/item/201404/11/20140411214939_XswXa.jpeg',
-            ],
+            data: bannerStr,
             buildShowView: (index,data){
               return Image.network(data,fit: BoxFit.cover,);
             },
@@ -119,6 +108,50 @@ class _MainHme extends State<MainHome>{
         return _list;
       });
     });
+  }
+
+  @override
+  void initStat() {
+    mPresenter = new HomePresenter();
+    mPresenter.attachView(this);
+    mPresenter.getBanner();
+    bannerStr = [
+      "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1531798262708&di=53d278a8427f482c5b836fa0e057f4ea&imgtype=0&src=http%3A%2F%2Fh.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F342ac65c103853434cc02dda9f13b07eca80883a.jpg",
+      'https://b-ssl.duitang.com/uploads/item/201709/26/20170926131419_8YhLA.jpeg',
+      'https://b-ssl.duitang.com/uploads/item/201510/14/20151014172010_RnJVz.jpeg',
+      'http://img5.duitang.com/uploads/item/201404/11/20140411214939_XswXa.jpeg',
+    ];
+    _scrollController.addListener((){
+      if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent){
+        //滑到底部，加载更多...
+        _loadData(false);
+      }
+    });
+  }
+
+  @override
+  void dispos() {
+    // TODO: implement dispos
+  }
+
+  @override
+  void hideLoading() {
+    // TODO: implement hideLoading
+  }
+
+  @override
+  void onBanner(List<BannerItem> data) {
+    print(data[0].toString());
+  }
+
+  @override
+  void onFail(String e) {
+    // TODO: implement onFail
+  }
+
+  @override
+  void showLoading() {
+    // TODO: implement showLoading
   }
 
 }
