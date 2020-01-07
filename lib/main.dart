@@ -1,25 +1,53 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_lihui/common/sharepre_name.dart';
 import 'package:flutter_lihui/main/main_app.dart';
-import 'package:flutter_lihui/main/main_navigation.dart';
 import 'package:flutter_lihui/user/login.dart';
-import 'package:flutter_lihui/common/navigator_push.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provide/provide.dart';
+import 'package:flutter_lihui/common/my_public.dart';
 
-void main() => runApp(MyApp());
+import 'common/sp_key.dart';
+import 'common/theme_colors.dart';
+import 'common/theme_provide.dart';
+
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  var providers = Providers();
+
+  providers.provide(Provider.function((context)=> ThemeProvide()));
+
+  int themeIndex;
+  SPKey.spGetInt(SPKey.themeIndex).then((onValue){
+    log('theme:$themeIndex, $onValue');
+    themeIndex = onValue;
+  });
+  themeIndex =  null == themeIndex ? 0 : themeIndex;
+  runApp(ProviderNode(child: MyApp(themeIndex: themeIndex,), providers: providers));
+}
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  int themeIndex = 0;
+
+  MyApp({this.themeIndex});
+
+  _themeColor(ThemeProvide theme, String type){
+    return THColors.themeColor[theme.value != null ? theme.value: themeIndex][type];
+  }
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'LiHui',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      debugShowCheckedModeBanner: false,
-      home: MyHomePage(),
+    return Provide<ThemeProvide>(
+      builder: (context,child,theme){
+        return MaterialApp(
+          title: 'LiHui',
+          theme: ThemeData(
+            primaryColor: _themeColor(theme,'primaryColor'),
+            primaryColorDark: _themeColor(theme,'colorPrimaryDark'),
+            primaryColorLight: _themeColor(theme,'colorPrimaryLight'),
+            accentColor:  _themeColor(theme,'colorAccent'),
+          ),
+          debugShowCheckedModeBanner: false,
+          home: MyHomePage(),
+        );
+      },
     );
   }
 }
@@ -33,27 +61,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
   var timer;
 
-  Widget goTo() {
-//    Future<bool> isLogin = _getIsLogin();
-    if(false){
-      return MainApp();
-    }else{
-      return Login();
-    }
-  }
-
-  _getIsLogin() async {
-    scheduleMicrotask(()async{
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      return await prefs.getBool(SharePreName().IS_LOGIN) ?? false;
-    });
-  }
-
   @override
   void initState() {
     super.initState();
-    timer = Timer(const Duration(milliseconds: 1500),(){
-      PushHelper().goAndFinish(context, goTo());
+    LogUtil.init(isDebug: MyConfig.logIsDebug, title: MyConfig.logTitle,);
+    timer = Timer(const Duration(milliseconds: 150),(){
+      SPKey.spGetBool(SPKey.IS_LOGIN).then((onValue){
+        if(onValue){
+          goToRm(context, MainApp());
+        }else{
+          goToRm(context, Login());
+        }
+      });
     });
   }
 

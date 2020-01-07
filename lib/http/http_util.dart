@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
 import 'api.dart';
-import 'log_util.dart';
+import 'package:flutter_lihui/util/log_util.dart';
 
 /*
  * 封装 restful 请求

@@ -6,9 +6,9 @@ import 'package:flutter_lihui/http/api_service.dart';
 import 'package:flutter_lihui/http/http_util.dart';
 import 'package:flutter_lihui/json_entity_model/login_entity.dart';
 import 'package:flutter_lihui/main/main_app.dart';
-import 'package:flutter_lihui/common/navigator_push.dart';
 import 'package:flutter_lihui/common/my_config.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_lihui/common/my_public.dart';
 
 class Login extends StatefulWidget{
   @override
@@ -94,10 +94,12 @@ class _Login extends State<Login>{
     ApiService.login(name, pwd).then((response){
       LoginEntity bean = EntityFactory.generateOBJ<LoginEntity>(response.data);
       if(bean.code == 200) {
+        myToast('登录成功');
+        SPKey.spSetBool(SPKey.IS_LOGIN, true);
         //验证通过提交数据
         MyConfig().userId = bean.data.userId;
         print('登录 name:${name},pwd:$pwd,bean:${bean.toJson()}');
-        PushHelper().goAndFinish(context, MainApp());
+        goToRm(context, MainApp());
       }else{
         print(bean.msg);
         Fluttertoast.showToast(msg: bean.msg);

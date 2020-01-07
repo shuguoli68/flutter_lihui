@@ -5,5 +5,6 @@ class MyConfig{
 
 
   //全局常量
-
+  static const bool logIsDebug = true;
+  static const String logTitle = 'LiHui';
 }
