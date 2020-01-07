@@ -125,7 +125,7 @@ class HomeDrawer {
             leading: CircleAvatar(child: Text('分'),),
             title: Text('积分排行榜'),
             onTap: (){
-
+              goPoP(context);
             },
           ),
         ),

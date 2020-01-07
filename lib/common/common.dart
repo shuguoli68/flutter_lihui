@@ -30,6 +30,10 @@ goPop(BuildContext context, Map key){
   Navigator.of(context).pop(key);
 }
 
+goPoP(BuildContext context){
+  Navigator.pop(context);
+}
+
 numStr(int count){
   if(count<11000){
     return count.toString();
