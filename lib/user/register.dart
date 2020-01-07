@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_lihui/base/base_state.dart';
+import 'package:flutter_lihui/contract/register_contract.dart';
+import 'package:flutter_lihui/presenter/RegisterPresenter.dart';
+import 'package:flutter_lihui/common/my_public.dart';
 
 
 class Register extends StatefulWidget{
@@ -6,24 +10,13 @@ class Register extends StatefulWidget{
   State<StatefulWidget> createState() => _Register();
 }
 
-class _Register extends State<Register>{
+class _Register extends BaseState<Register, RegisterPresenter> implements IRegisterView{
   TextEditingController _controller1 = new TextEditingController();
   TextEditingController _controller2 = new TextEditingController();
   GlobalKey _key = new GlobalKey<FormState>();
   String name = "";
   String pwd = "";
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _controller1.addListener((){
-      name = _controller1.text;
-    });
-    _controller2.addListener((){
-      pwd = _controller2.text;
-    });
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,10 +62,11 @@ class _Register extends State<Register>{
                       color: Theme.of(context).primaryColor,
                       textColor: Colors.white,
                       onPressed: (){
-                        if((_key.currentState as FormState).validate()){
+//                        if((_key.currentState as FormState).validate()){
                           //验证通过提交数据
-                          print('注册 name:${name},pwd:${pwd}');
-                        }
+                          print('注册 name:${name},pwd:${pwd},mPresenter:$mPresenter');
+                          mPresenter.register(name, pwd);
+//                        }
                       },))
                   ],
                 ),
@@ -82,5 +76,45 @@ class _Register extends State<Register>{
         ),
       ),
     );
+  }
+
+  @override
+  void dispos() {
+    // TODO: implement dispos
+  }
+
+  @override
+  void hideLoading() {
+    // TODO: implement hideLoading
+  }
+
+  @override
+  void initStat() {
+    mPresenter = new RegisterPresenter();
+    _controller1.addListener((){
+      name = _controller1.text;
+    });
+    _controller2.addListener((){
+      pwd = _controller2.text;
+    });
+  }
+
+  @override
+  void onSuccess() {
+    print("注册成功");
+    var key = Map<String, String>();
+    key["userId"] = name;
+    key["passWord"] = pwd;
+    goPop(context, key);
+  }
+
+  @override
+  void onFail(String bean) {
+    print("注册失败："+bean);
+  }
+
+  @override
+  void showLoading() {
+    // TODO: implement showLoading
   }
 }

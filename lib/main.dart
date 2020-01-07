@@ -67,11 +67,11 @@ class _MyHomePageState extends State<MyHomePage> {
     LogUtil.init(isDebug: MyConfig.logIsDebug, title: MyConfig.logTitle,);
     timer = Timer(const Duration(milliseconds: 150),(){
       SPKey.spGetBool(SPKey.IS_LOGIN).then((onValue){
-        if(onValue){
-          goToRm(context, MainApp());
-        }else{
+//        if(onValue){
+//          goToRm(context, MainApp());
+//        }else{
           goToRm(context, Login());
-        }
+//        }
       });
     });
   }

@@ -41,6 +41,17 @@ class ApiService{
     return base(Api.login, req:req);
   }
 
+  ///
+  ///注册
+  ///
+  static Future<Response> register(String username, String password)async{
+    Map<String, dynamic> req = {
+      'userId':username,
+      'passWord':password
+    };
+    return base(Api.register, req:req);
+  }
+
 
 
 }

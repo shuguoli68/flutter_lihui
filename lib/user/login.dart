@@ -10,6 +10,8 @@ import 'package:flutter_lihui/common/my_config.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_lihui/common/my_public.dart';
 
+import 'register.dart';
+
 class Login extends StatefulWidget{
   @override
   State<StatefulWidget> createState() => _Login();
@@ -81,6 +83,30 @@ class _Login extends State<Login>{
                     ))
                   ],
                 ),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.only(top: 30.0,left: 5.0,right: 5.0),
+                child: ListTile(title: Text('还没账号？去注册',style: TextStyle(color: Theme.of(context).primaryColor),),onTap: (){
+                  Navigator
+                      .of(context).push(MaterialPageRoute(builder: (_)=> Register()))
+                      .then((onValue){
+                    if(onValue == null) return;
+                    Map<String,String> map = onValue;
+                    String txt1 = map['userId'];
+                    String txt2 = map['passWord'];
+                    if(txt1.isNotEmpty) {
+                      _controller1.text = txt1;
+                      if (txt2.isNotEmpty) {
+                        _controller2.text = txt2;
+                        name = txt1;
+                        pwd =  txt2;
+                        _login();
+                        myToast( '正在登录...');
+                      }
+                    }
+                  });
+                },),
               ),
             ],
           ),
