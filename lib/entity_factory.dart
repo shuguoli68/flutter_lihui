@@ -6,11 +6,14 @@ import 'package:flutter_lihui/json_entity_model/user_entity.dart';
 
 import 'json_entity_model/banner_entity.dart';
 import 'json_entity_model/common_bool_entity.dart';
+import 'json_entity_model/diary_entity.dart';
 
 class EntityFactory {
   static T generateOBJ<T>(json) {
     if (1 == 0) {
       return null;
+    } else if (T.toString() == "DiaryEntity") {
+      return DiaryEntity.fromJson(json) as T;
     } else if (T.toString() == "BannerEntity") {
       return BannerEntity.fromJson(json) as T;
     }else if (T.toString() == "LoginEntity") {

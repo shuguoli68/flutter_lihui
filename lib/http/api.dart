@@ -8,6 +8,7 @@ class Api {
   static final String logout = '/logout';
   static final String register = '/register';
   static final String banner = '/banner/list';
+  static final String diaryList = '/diary/list';
   static final String download = '/download/{fileName}';
 
 }

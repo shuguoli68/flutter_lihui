@@ -2,6 +2,7 @@
 import 'package:flutter_lihui/base/base_presenter.dart';
 import 'package:flutter_lihui/contract/home_contract.dart';
 import 'package:flutter_lihui/json_entity_model/banner_entity.dart';
+import 'package:flutter_lihui/json_entity_model/diary_entity.dart';
 import 'package:flutter_lihui/model/HomeModel.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -28,6 +29,17 @@ class HomePresenter extends BasePresenter<IHomeView> {
       }else{
         mView.onFail(bean.msg);
       }
+    });
+  }
+
+  getTopDiary(int page, bool isRefresh) {
+    if (!isViewAttached()) {
+      print("HomePresenter isViewAttached false");
+      return;
+    }
+    ApiService.diaryList(page).then((response){
+      DiaryEntity bean = EntityFactory.generateOBJ<DiaryEntity>(response.data);
+      mView.onDiary(bean, isRefresh);
     });
   }
 

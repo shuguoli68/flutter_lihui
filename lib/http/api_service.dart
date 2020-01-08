@@ -9,6 +9,7 @@ import 'dart:convert' as convert;
 
 class ApiService{
 
+  static final int pageSize = 20;
   static Map<String, String> _headerMap;
 
   static Map<String, String> _getHeader() {
@@ -77,9 +78,20 @@ class ApiService{
   static Future<Response> banner()async{
     Map<String, dynamic> req = {
       "pageNum": 0,
-      "pageSize": 10
+      "pageSize": pageSize
     };
     return base(Api.banner, req:req);
+  }
+
+  ///
+  ///获取diary列表
+  ///
+  static Future<Response> diaryList(int page)async{
+    Map<String, dynamic> req = {
+      "pageNum": page,
+      "pageSize": pageSize
+    };
+    return base(Api.diaryList, req:req);
   }
 
 }
