@@ -94,4 +94,14 @@ class ApiService{
     return base(Api.diaryList, req:req);
   }
 
+  ///
+  ///获取diary列表
+  ///
+  static Future<Response> allTheme()async{
+    Map<String, dynamic> req = {
+
+    };
+    return base(Api.allTheme, req:req);
+  }
+
 }

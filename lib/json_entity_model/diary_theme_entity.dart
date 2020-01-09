@@ -1,5 +1,5 @@
 class DiaryThemeEntity {
-    List<Theme> data;
+    List<ThemeItem> data;
     int code;
     String msg;
 
@@ -7,7 +7,7 @@ class DiaryThemeEntity {
 
     factory DiaryThemeEntity.fromJson(Map<String, dynamic> json) {
         return DiaryThemeEntity(
-            data: json['data'] != null ? (json['data'] as List).map((i) => Theme.fromJson(i)).toList() : null,
+            data: json['data'] != null ? (json['data'] as List).map((i) => ThemeItem.fromJson(i)).toList() : null,
             code: json['code'], 
             msg: json['msg'], 
         );
@@ -24,16 +24,16 @@ class DiaryThemeEntity {
     }
 }
 
-class Theme {
+class ThemeItem {
     int id;
     List<SubTheme> subThemes;
     int themeId;
     String themeName;
 
-    Theme({this.id, this.subThemes, this.themeId, this.themeName});
+    ThemeItem({this.id, this.subThemes, this.themeId, this.themeName});
 
-    factory Theme.fromJson(Map<String, dynamic> json) {
-        return Theme(
+    factory ThemeItem.fromJson(Map<String, dynamic> json) {
+        return ThemeItem(
             id: json['id'],
             subThemes: json['subThemes'] != null ? (json['subThemes'] as List).map((i) => SubTheme.fromJson(i)).toList() : null,
             themeId: json['themeId'],
@@ -78,4 +78,11 @@ class SubTheme {
         data['themeId'] = this.themeId;
         return data;
     }
+
+    @override
+    String toString() {
+        return 'SubTheme{id: $id, subThemeId: $subThemeId, subThemeName: $subThemeName, themeId: $themeId}';
+    }
+
+
 }

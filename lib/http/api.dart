@@ -9,6 +9,7 @@ class Api {
   static final String register = '/register';
   static final String banner = '/banner/list';
   static final String diaryList = '/diary/list';
+  static final String allTheme = '/diaryTheme/list';
   static final String download = '/download/{fileName}';
 
 }

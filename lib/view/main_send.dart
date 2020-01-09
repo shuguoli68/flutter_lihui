@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_lihui/common/my_public.dart';
+import 'sub/theme_page.dart';
 
 class MainSend extends StatefulWidget{
   @override
@@ -11,6 +13,10 @@ class _MainSend extends State<MainSend>{
   TextEditingController _controller2 = new TextEditingController();
   String title = "";
   String content = "";
+  String theme = "";
+  String tag = "";
+  int themeId = 0;
+  int subThemeId = 0;
 
   @override
   void initState() {
@@ -28,24 +34,45 @@ class _MainSend extends State<MainSend>{
     return Scaffold(
       body: Column(
         children: <Widget>[
-          TextFormField(
-            decoration: InputDecoration(
-                labelText: '标题',
-                hintText: '请输入您要发布的日记标题',
-                prefixIcon: Icon(Icons.lock)
+
+          SingleChildScrollView(child: Column(children: <Widget>[
+            TextFormField(
+              decoration: InputDecoration(
+                  labelText: '标题',
+                  hintText: '请输入您要发布的日记标题',
+                  prefixIcon: Icon(Icons.lock)
+              ),
+              controller: _controller1,
             ),
-            controller: _controller1,
-          ),
-          TextFormField(
-            decoration: InputDecoration(
+            TextFormField(
+              decoration: InputDecoration(
                 labelText: '内容',
                 hintText: '请输入您要发布的日记内容',
                 prefixIcon: Icon(Icons.lock),
+              ),
+              controller: _controller2,
+              minLines: 8,
+              maxLines: 50,
             ),
-            controller: _controller2,
-            minLines: 5,
-            maxLines: 15,
-          ),
+            ListTile(title: Text('分类：$theme'),trailing: Icon(Icons.keyboard_arrow_right,),onTap: (){
+              Navigator
+                  .of(context).push(MaterialPageRoute(builder: (_)=> ThemePage()))
+                  .then((onValue){
+                    Map<String, String> key = onValue;
+                    if(onValue==null){
+                      myToast('未选择分类');
+                      return;
+                    }
+
+              });
+            },),
+
+            ListTile(title: Text('标签：$tag'),trailing: Icon(Icons.keyboard_arrow_right,),onTap: (){
+
+            },),
+
+          ],),),
+
           Padding(
             padding: const EdgeInsets.only(top: 30.0,left: 5.0,right: 5.0),
             child: Row(
@@ -60,6 +87,7 @@ class _MainSend extends State<MainSend>{
               ],
             ),
           ),
+
         ],
       )
     );
