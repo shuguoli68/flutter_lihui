@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_lihui/entity_factory.dart';
-import 'package:flutter_lihui/http/api.dart';
-import 'package:flutter_lihui/json_entity_model/publish_entity.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class MainSend extends StatefulWidget{
   @override
@@ -34,8 +30,8 @@ class _MainSend extends State<MainSend>{
         children: <Widget>[
           TextFormField(
             decoration: InputDecoration(
-                labelText: '主题',
-                hintText: '请输入您要发布的主题',
+                labelText: '标题',
+                hintText: '请输入您要发布的日记标题',
                 prefixIcon: Icon(Icons.lock)
             ),
             controller: _controller1,
@@ -43,20 +39,27 @@ class _MainSend extends State<MainSend>{
           TextFormField(
             decoration: InputDecoration(
                 labelText: '内容',
-                hintText: '请输入您要发布的内容',
+                hintText: '请输入您要发布的日记内容',
                 prefixIcon: Icon(Icons.lock),
             ),
             controller: _controller2,
             minLines: 5,
             maxLines: 15,
           ),
-          RaisedButton(
-            padding: EdgeInsets.all(15.0),
-            child: Text('发布', style: TextStyle(color: Colors.green),),
-            color: Theme.of(context).primaryColor,
-            textColor: Colors.white,
-            onPressed: _publish,
-          )
+          Padding(
+            padding: const EdgeInsets.only(top: 30.0,left: 5.0,right: 5.0),
+            child: Row(
+              children: <Widget>[
+                Expanded(child: RaisedButton(
+                  padding: EdgeInsets.all(15.0),
+                  child: Text('发布'),
+                  color: Theme.of(context).primaryColor,
+                  textColor: Colors.white,
+                  onPressed: _publish,
+                ))
+              ],
+            ),
+          ),
         ],
       )
     );
