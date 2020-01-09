@@ -14,7 +14,7 @@ class _MainSend extends State<MainSend>{
   String title = "";
   String content = "";
   String theme = "";
-  String tag = "";
+  String tag = "0";
   int themeId = 0;
   int subThemeId = 0;
 
@@ -40,7 +40,6 @@ class _MainSend extends State<MainSend>{
               decoration: InputDecoration(
                   labelText: '标题',
                   hintText: '请输入您要发布的日记标题',
-                  prefixIcon: Icon(Icons.lock)
               ),
               controller: _controller1,
             ),
@@ -48,12 +47,10 @@ class _MainSend extends State<MainSend>{
               decoration: InputDecoration(
                 labelText: '内容',
                 hintText: '请输入您要发布的日记内容',
-                prefixIcon: Icon(Icons.lock),
               ),
               controller: _controller2,
-              minLines: 8,
-              maxLines: 50,
             ),
+
             ListTile(title: Text('分类：$theme'),trailing: Icon(Icons.keyboard_arrow_right,),onTap: (){
               Navigator
                   .of(context).push(MaterialPageRoute(builder: (_)=> ThemePage()))
@@ -63,7 +60,11 @@ class _MainSend extends State<MainSend>{
                       myToast('未选择分类');
                       return;
                     }
-
+                    themeId = int.parse(key['themeId']);
+                    subThemeId = int.parse(key['subThemeId']);
+                    setState(() {
+                      theme = key['themeName'] + '-' + key['subThemeName'];
+                    });
               });
             },),
 
@@ -95,16 +96,6 @@ class _MainSend extends State<MainSend>{
 
 
   void _publish() async {
-//    ResultData data = await Api.publish(title, content);
-//    if(data.isSuccess) {
-//      PublishEntity bean = EntityFactory.generateOBJ<PublishEntity>(data.data);
-//      if (bean.code == 200) {
-//        print('发布成功:'+bean.data.toString());
-//        Fluttertoast.showToast(msg: '发布成功');
-//      }
-//    }else{
-//      print('服务器错误:'+data.code.toString());
-//      Fluttertoast.showToast(msg: '服务器错误:'+data.code.toString());
-//    }
+
   }
 }

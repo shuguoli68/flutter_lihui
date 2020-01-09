@@ -26,8 +26,16 @@ class _ThemePage extends State<ThemePage>{
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(baseBg),
-      appBar: AppBar(),
-      body: Row(
+      appBar: AppBar(title: Text('类别'),),
+      body: _body(),
+    );
+  }
+
+  _body() {
+    if(_entity==null){
+      return Center(child: Text('正在加载数据...'),);
+    }else{
+      return Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           new Expanded(
@@ -47,16 +55,16 @@ class _ThemePage extends State<ThemePage>{
                     }),
               )),
           new Expanded(
-              flex: 5,
-              child: Wrap(
-                spacing: 5,
-                runSpacing: 5,
-                children: childChilden(selectPos),
-              ),
+            flex: 5,
+            child: Wrap(
+              spacing: 5,
+              runSpacing: 5,
+              children: childChilden(selectPos),
+            ),
           ),
         ],
-      ),
-    );
+      );
+    }
   }
 
   List<Widget> childChilden(int index) => List.generate(_entity.data[index].subThemes.length, (subIndex) {
@@ -88,4 +96,6 @@ class _ThemePage extends State<ThemePage>{
       });
     });
   }
+
+
 }
