@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_lihui/view/main_app.dart';
 import 'package:flutter_lihui/view/sub/login.dart';
 import 'package:provide/provide.dart';
 import 'package:flutter_lihui/common/my_public.dart';
 
+import 'base/base_route.dart';
 import 'common/sp_key.dart';
 import 'common/theme_colors.dart';
 import 'common/theme_provide.dart';
@@ -46,6 +46,7 @@ class MyApp extends StatelessWidget {
           ),
           debugShowCheckedModeBanner: false,
           home: MyHomePage(),
+          routes: BaseRoute.allRoute(),
         );
       },
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_lihui/common/my_public.dart';
+import 'package:flutter_lihui/model/InputBean.dart';
 import 'sub/theme_page.dart';
 
 class MainSend extends StatefulWidget{
@@ -96,6 +97,7 @@ class _MainSend extends State<MainSend>{
 
 
   void _publish() async {
-
+    dynamic  result = await Navigator.pushNamed(context, '/InputPage', arguments: InputBean(title: '内容', hint: '日记内容',content: '告诉看过心胸宽广u反正会风中劲草喜剧房租回家做饭给现金举行ch6868i关系就像个就高兴发i死舒服发家致富紧张个这句负责中介费徐句喜剧u反正接着发巨款v看v房租几分钟继续看徐fzujxgjxvkv，，ku发试卷租房客虚空嘘嘘负责就像个开心果开心果看v想发租u反正技工学校几个可惜个房租西沟几个选修课v看fzujfxgxjvjvk，if只需姐姐虚空v看吧风俗继续挂机小高考v徐看吧吃if自己洗干净刚下课续卡v想看吧吃发i在看小高考虚空虚空v显卡v想空虚发i这个小家具辛苦V型看徐v显卡复习'));
+    print('result:$result');
   }
 }
