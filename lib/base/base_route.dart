@@ -1,4 +1,5 @@
 import 'package:flutter_lihui/view/common/input_page.dart';
+import 'package:flutter_lihui/view/sub/tag_page.dart';
 
 class BaseRoute {
   ///
@@ -6,7 +7,8 @@ class BaseRoute {
   ///
   static allRoute(){
     return {
-      '/InputPage': (context) => InputPage()
+      '/InputPage': (context) => InputPage(),
+      '/TagPage': (context) => TagPage(),
     };
   }
 

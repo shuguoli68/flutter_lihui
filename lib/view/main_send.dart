@@ -4,6 +4,7 @@ import 'package:flutter_lihui/common/my_public.dart';
 import 'package:flutter_lihui/contract/send_contract.dart';
 import 'package:flutter_lihui/json_entity_model/common_bool_entity.dart';
 import 'package:flutter_lihui/json_entity_model/diary_entity.dart';
+import 'package:flutter_lihui/json_entity_model/diary_tag_entity.dart';
 import 'package:flutter_lihui/model/InputBean.dart';
 import 'package:flutter_lihui/presenter/SendPresenter.dart';
 import 'sub/theme_page.dart';
@@ -19,7 +20,8 @@ class _MainSend extends BaseState<MainSend, SendPresenter> with AutomaticKeepAli
   String title = "";
   String content = "";
   String theme = "";
-  String tag = "0";
+  String tag = "";
+  String tagStr = "";
   int themeId = 0;
   int subThemeId = 0;
 
@@ -67,8 +69,8 @@ class _MainSend extends BaseState<MainSend, SendPresenter> with AutomaticKeepAli
                 });
               },),
 
-              ListTile(title: Text('标签：$tag'),trailing: Icon(Icons.keyboard_arrow_right,),onTap: (){
-
+              ListTile(title: Text('标签：${tagStr.toString()}'),trailing: Icon(Icons.keyboard_arrow_right,),onTap: (){
+                _tag();
               },),
 
             ],),),
@@ -97,9 +99,20 @@ class _MainSend extends BaseState<MainSend, SendPresenter> with AutomaticKeepAli
 
   void _content() async {
     dynamic  result = await Navigator.pushNamed(context, '/InputPage', arguments: InputBean(title: '内容', hint: '日记内容',content: '告诉看过心胸宽广u反正会风中劲草喜剧房租回家做饭给现金举行ch6868i关系就像个就高兴发i死舒服发家致富紧张个这句负责中介费徐句喜剧u反正接着发巨款v看v房租几分钟继续看徐fzujxgjxvkv，，ku发试卷租房客虚空嘘嘘负责就像个开心果开心果看v想发租u反正技工学校几个可惜个房租西沟几个选修课v看fzujfxgxjvjvk，if只需姐姐虚空v看吧风俗继续挂机小高考v徐看吧吃if自己洗干净刚下课续卡v想看吧吃发i在看小高考虚空虚空v显卡v想空虚发i这个小家具辛苦V型看徐v显卡复习'));
-    print('result:$result');
+    print('_content:$result');
     setState(() {
       content = result;
+    });
+  }
+
+  _tag() async {
+    dynamic result = await Navigator.pushNamed(context, '/TagPage');
+    List<TagItem> tagList = result;
+    tagList.forEach((item){
+      tag +=item.tagId + '|';
+      tagStr += item.tagStr+'-';
+    });
+    setState(() {
     });
   }
 
@@ -110,11 +123,11 @@ class _MainSend extends BaseState<MainSend, SendPresenter> with AutomaticKeepAli
     } else if(content.isEmpty) {
       myToast('内容不能为空');
       return;
-    }else if(tag.isEmpty){
+    }else if(tag.toString().isEmpty){
       myToast('标签不能为空');
       return;
     }
-    DiaryItem item = new DiaryItem(content: content,subTheme: subThemeId,theme: themeId,title: title,userId: MyConfig.userId,tagId: tag);
+    DiaryItem item = new DiaryItem(content: content,subTheme: subThemeId,theme: themeId,title: title,userId: MyConfig.userId,tagId: tag.toString());
     mPresenter.sendDiary(item);
   }
 

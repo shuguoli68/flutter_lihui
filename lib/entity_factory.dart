@@ -7,13 +7,16 @@ import 'package:flutter_lihui/json_entity_model/user_entity.dart';
 import 'json_entity_model/banner_entity.dart';
 import 'json_entity_model/common_bool_entity.dart';
 import 'json_entity_model/diary_entity.dart';
+import 'json_entity_model/diary_tag_entity.dart';
 import 'json_entity_model/diary_theme_entity.dart';
 
 class EntityFactory {
   static T generateOBJ<T>(json) {
     if (1 == 0) {
       return null;
-    } else if (T.toString() == "DiaryThemeEntity") {
+    } else if (T.toString() == "DiaryTagEntity") {
+      return DiaryTagEntity.fromJson(json) as T;
+    }else if (T.toString() == "DiaryThemeEntity") {
       return DiaryThemeEntity.fromJson(json) as T;
     }else if (T.toString() == "DiaryEntity") {
       return DiaryEntity.fromJson(json) as T;

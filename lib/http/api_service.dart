@@ -120,4 +120,15 @@ class ApiService{
     return base(Api.addDiary, req:req);
   }
 
+  ///
+  ///获取全部diary标签
+  ///
+  static Future<Response> allTag()async{
+    Map<String, dynamic> req = {
+      "pageNum": 1,
+      "pageSize": 100
+    };
+    return base(Api.allTag, req:req);
+  }
+
 }
