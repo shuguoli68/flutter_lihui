@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_lihui/base/base_state.dart';
 import 'package:flutter_lihui/common/my_public.dart';
 import 'package:flutter_lihui/model/InputBean.dart';
+import 'package:flutter_lihui/presenter/SendPresenter.dart';
 import 'sub/theme_page.dart';
 
 class MainSend extends StatefulWidget{
@@ -8,10 +10,9 @@ class MainSend extends StatefulWidget{
   State<StatefulWidget> createState() => _MainSend();
 }
 
-class _MainSend extends State<MainSend>{
+class _MainSend extends BaseState<MainSend, SendPresenter> with AutomaticKeepAliveClientMixin implements ISendView{
 
   TextEditingController _controller1 = new TextEditingController();
-  TextEditingController _controller2 = new TextEditingController();
   String title = "";
   String content = "";
   String theme = "";
@@ -24,9 +25,6 @@ class _MainSend extends State<MainSend>{
     super.initState();
     _controller1.addListener((){
       title = _controller1.text;
-    });
-    _controller2.addListener((){
-      content = _controller2.text;
     });
   }
 
@@ -44,13 +42,9 @@ class _MainSend extends State<MainSend>{
               ),
               controller: _controller1,
             ),
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: '内容',
-                hintText: '请输入您要发布的日记内容',
-              ),
-              controller: _controller2,
-            ),
+            ListTile(title: Text('内容：$content'),trailing: Icon(Icons.keyboard_arrow_right,),onTap: (){
+              _content();
+            },),
 
             ListTile(title: Text('分类：$theme'),trailing: Icon(Icons.keyboard_arrow_right,),onTap: (){
               Navigator
@@ -96,8 +90,39 @@ class _MainSend extends State<MainSend>{
   }
 
 
-  void _publish() async {
+  void _content() async {
     dynamic  result = await Navigator.pushNamed(context, '/InputPage', arguments: InputBean(title: '内容', hint: '日记内容',content: '告诉看过心胸宽广u反正会风中劲草喜剧房租回家做饭给现金举行ch6868i关系就像个就高兴发i死舒服发家致富紧张个这句负责中介费徐句喜剧u反正接着发巨款v看v房租几分钟继续看徐fzujxgjxvkv，，ku发试卷租房客虚空嘘嘘负责就像个开心果开心果看v想发租u反正技工学校几个可惜个房租西沟几个选修课v看fzujfxgxjvjvk，if只需姐姐虚空v看吧风俗继续挂机小高考v徐看吧吃if自己洗干净刚下课续卡v想看吧吃发i在看小高考虚空虚空v显卡v想空虚发i这个小家具辛苦V型看徐v显卡复习'));
     print('result:$result');
+    setState(() {
+      content = result;
+    });
   }
+
+  void _publish() {
+
+  }
+
+  @override
+  void dispos() {
+    // TODO: implement dispos
+  }
+
+  @override
+  void hideLoading() {
+    // TODO: implement hideLoading
+  }
+
+  @override
+  void initStat() {
+    // TODO: implement initStat
+  }
+
+  @override
+  void showLoading() {
+    // TODO: implement showLoading
+  }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }
