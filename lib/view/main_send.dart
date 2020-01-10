@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_lihui/base/base_state.dart';
 import 'package:flutter_lihui/common/my_public.dart';
+import 'package:flutter_lihui/contract/send_contract.dart';
+import 'package:flutter_lihui/json_entity_model/common_bool_entity.dart';
+import 'package:flutter_lihui/json_entity_model/diary_entity.dart';
 import 'package:flutter_lihui/model/InputBean.dart';
 import 'package:flutter_lihui/presenter/SendPresenter.dart';
 import 'sub/theme_page.dart';
@@ -21,8 +24,8 @@ class _MainSend extends BaseState<MainSend, SendPresenter> with AutomaticKeepAli
   int subThemeId = 0;
 
   @override
-  void initState() {
-    super.initState();
+  void initStat() {
+    mPresenter = SendPresenter();
     _controller1.addListener((){
       title = _controller1.text;
     });
@@ -34,40 +37,42 @@ class _MainSend extends BaseState<MainSend, SendPresenter> with AutomaticKeepAli
       body: Column(
         children: <Widget>[
 
-          SingleChildScrollView(child: Column(children: <Widget>[
-            TextFormField(
-              decoration: InputDecoration(
+          Expanded(
+            child: SingleChildScrollView(child: Column(children: <Widget>[
+              TextFormField(
+                decoration: InputDecoration(
                   labelText: '标题',
                   hintText: '请输入您要发布的日记标题',
+                ),
+                controller: _controller1,
               ),
-              controller: _controller1,
-            ),
-            ListTile(title: Text('内容：$content'),trailing: Icon(Icons.keyboard_arrow_right,),onTap: (){
-              _content();
-            },),
+              ListTile(title: Text('内容：$content',maxLines: 1,overflow: TextOverflow.ellipsis,),trailing: Icon(Icons.keyboard_arrow_right,),onTap: (){
+                _content();
+              },),
 
-            ListTile(title: Text('分类：$theme'),trailing: Icon(Icons.keyboard_arrow_right,),onTap: (){
-              Navigator
-                  .of(context).push(MaterialPageRoute(builder: (_)=> ThemePage()))
-                  .then((onValue){
-                    Map<String, String> key = onValue;
-                    if(onValue==null){
-                      myToast('未选择分类');
-                      return;
-                    }
-                    themeId = int.parse(key['themeId']);
-                    subThemeId = int.parse(key['subThemeId']);
-                    setState(() {
-                      theme = key['themeName'] + '-' + key['subThemeName'];
-                    });
-              });
-            },),
+              ListTile(title: Text('分类：$theme'),trailing: Icon(Icons.keyboard_arrow_right,),onTap: (){
+                Navigator
+                    .of(context).push(MaterialPageRoute(builder: (_)=> ThemePage()))
+                    .then((onValue){
+                  Map<String, String> key = onValue;
+                  if(onValue==null){
+                    myToast('未选择分类');
+                    return;
+                  }
+                  themeId = int.parse(key['themeId']);
+                  subThemeId = int.parse(key['subThemeId']);
+                  setState(() {
+                    theme = key['themeName'] + '-' + key['subThemeName'];
+                  });
+                });
+              },),
 
-            ListTile(title: Text('标签：$tag'),trailing: Icon(Icons.keyboard_arrow_right,),onTap: (){
+              ListTile(title: Text('标签：$tag'),trailing: Icon(Icons.keyboard_arrow_right,),onTap: (){
 
-            },),
+              },),
 
-          ],),),
+            ],),),
+          ),
 
           Padding(
             padding: const EdgeInsets.only(top: 30.0,left: 5.0,right: 5.0),
@@ -99,7 +104,18 @@ class _MainSend extends BaseState<MainSend, SendPresenter> with AutomaticKeepAli
   }
 
   void _publish() {
-
+    if(title.isEmpty){
+      myToast('标题不能为空');
+      return;
+    } else if(content.isEmpty) {
+      myToast('内容不能为空');
+      return;
+    }else if(tag.isEmpty){
+      myToast('标签不能为空');
+      return;
+    }
+    DiaryItem item = new DiaryItem(content: content,subTheme: subThemeId,theme: themeId,title: title,userId: MyConfig.userId,tagId: tag);
+    mPresenter.sendDiary(item);
   }
 
   @override
@@ -108,21 +124,27 @@ class _MainSend extends BaseState<MainSend, SendPresenter> with AutomaticKeepAli
   }
 
   @override
-  void hideLoading() {
-    // TODO: implement hideLoading
-  }
-
-  @override
-  void initStat() {
-    // TODO: implement initStat
-  }
-
-  @override
   void showLoading() {
     // TODO: implement showLoading
   }
 
   @override
+  void hideLoading() {
+    // TODO: implement hideLoading
+  }
+
+  @override
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
+
+  @override
+  void onFail(String e) {
+    // TODO: implement onFail
+  }
+
+  @override
+  void onSend(CommonBoolEntity data, bool isRefresh) {
+    myToast('发布成功');
+    print('发布成功');
+  }
 }

@@ -2,6 +2,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_lihui/json_entity_model/diary_entity.dart';
 
 import 'api.dart';
 import 'http_util.dart';
@@ -102,6 +103,21 @@ class ApiService{
 
     };
     return base(Api.allTheme, req:req);
+  }
+
+  ///
+  ///添加diary
+  ///
+  static Future<Response> addDiary(DiaryItem item)async{
+    Map<String, dynamic> req = {
+      "content": item.content,
+      "subTheme": item.subTheme,
+      "theme": item.theme,
+      "title": item.title,
+      "userId": item.userId,
+      "tagId":item.tagId
+    };
+    return base(Api.addDiary, req:req);
   }
 
 }

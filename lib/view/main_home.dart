@@ -86,8 +86,11 @@ class _MainHme extends BaseState<MainHome, HomePresenter> with AutomaticKeepAliv
         ++page;
       });
       if(isRefresh){
-        if(mData.isNotEmpty)
+        if(mData.isNotEmpty) {
           _refreshController.refreshSuccess();
+          if(mData.length < 4)
+            _refreshController.loadMoreSuccess();
+        }
         else
           _refreshController.refreshEmpty();
       }else{
