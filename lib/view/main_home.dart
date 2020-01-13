@@ -156,6 +156,7 @@ class _MainHme extends BaseState<MainHome, HomePresenter> with AutomaticKeepAliv
         onBannerClickListener: (index,data){
           BannerItem item = data;
 //          goTo(context, WebWidget(url: item.urlPath,title: item.title,));
+        mPresenter.upload();
         },
         height: 200.0,
       ),);

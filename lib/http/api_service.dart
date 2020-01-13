@@ -33,11 +33,23 @@ class ApiService{
   }
 
   static Future<Response> download(String fileName, String savePath)async{
-    Map<String, dynamic> req = {
-      "fileName":fileName
-    };
-    var data = convert.jsonEncode(req);
-    var response = await HttpUtils.createInstance().download(Api.baseUrl+Api.download, savePath, data: data);
+//    Map<String, dynamic> req = {
+//      "fileName":fileName
+//    };
+//    var data = convert.jsonEncode(req);
+    var response = await HttpUtils.createInstance().download(Api.baseUrl+Api.download+fileName, savePath, /*data: data,*/onReceiveProgress: (count, total){
+      print('下载文件：$count  总大小：$total');
+    });
+    return response;
+  }
+
+  static Future<Response> upload(String fileName, String filePath)async{
+    FormData data = FormData.fromMap({
+      "file": await MultipartFile.fromFile(filePath, filename: fileName)
+    });
+    var response = await HttpUtils.createInstance().post(Api.baseUrl+Api.upload, data: data,onSendProgress: (count, total){
+      print('上传文件：$count  总大小：$total');
+    });
     return response;
   }
 

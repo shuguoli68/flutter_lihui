@@ -1,4 +1,7 @@
 
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter_lihui/base/base_presenter.dart';
 import 'package:flutter_lihui/contract/home_contract.dart';
 import 'package:flutter_lihui/json_entity_model/banner_entity.dart';
@@ -40,6 +43,16 @@ class HomePresenter extends BasePresenter<IHomeView> {
     ApiService.diaryList(page).then((response){
       DiaryEntity bean = EntityFactory.generateOBJ<DiaryEntity>(response.data);
       mView.onDiary(bean, isRefresh);
+    });
+  }
+  
+  upload() async{
+    File file = await FilePicker.getFile();
+    print(file.path + ',${file.lastAccessedSync().toIso8601String()}');
+    String fileName = file.path.split('/').last;
+//    String filePath;
+    ApiService.upload(fileName, file.path).then((response){
+      print('上传文件：${response.data}');
     });
   }
 

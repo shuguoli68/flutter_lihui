@@ -11,7 +11,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_lihui/common/my_public.dart';
 
 import 'package:flutter_lihui/view/sub/register.dart';
-import 'package:permission/permission.dart';
+//import 'package:permission/permission.dart';
 
 class Login extends StatefulWidget{
   @override
@@ -157,7 +157,7 @@ class _Login extends State<Login>{
 //    var permissions = await Permission.getPermissionsStatus([PermissionName.Calendar, PermissionName.Camera]);
 //    permissions.forEach((f){
 //    });
-    var permissionNames = await Permission.requestPermissions([PermissionName.Storage, PermissionName.Camera]);
+//    var permissionNames = await Permission.requestPermissions([PermissionName.Storage, PermissionName.Camera]);
 
 //    Permission.openSettings;
   }
