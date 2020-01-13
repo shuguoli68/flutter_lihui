@@ -14,38 +14,36 @@ class SPKey{
   //登录返回的cookie
   static const String COOKIE = "COOKIE";
 
+  static _share()async{
+    return await SharedPreferences.getInstance();
+  }
+
   static spSetStr(String key, String value) async {
-    SharedPreferences sp = await SharedPreferences.getInstance();
-    sp.setString(key, value);
+    _share().setString(key, value);
   }
 
   static Future<String> spGetStr(String key) async {
-    SharedPreferences sp = await SharedPreferences.getInstance();
-    String a = sp.getString(key);
+    String a = _share().getString(key);
     if(a==null) return "";
     return a;
   }
 
   static spSetBool(String key, bool value) async {
-    SharedPreferences sp = await SharedPreferences.getInstance();
-    sp.setBool(key, value);
+    _share().setBool(key, value);
   }
 
   static Future<bool> spGetBool(String key) async {
-    SharedPreferences sp = await SharedPreferences.getInstance();
-    bool a = sp.getBool(key);
+    bool a = _share().getBool(key);
     if(a == null) return false;
     return a;
   }
 
   static spSetInt(String key, int value) async {
-    SharedPreferences sp = await SharedPreferences.getInstance();
-    sp.setInt(key, value);
+    _share().setInt(key, value);
   }
 
   static Future<int> spGetInt(String key) async {
-    SharedPreferences sp = await SharedPreferences.getInstance();
-    int a = sp.getInt(key);
+    int a = _share().getInt(key);
     if(a == null) return 0;
     return a;
   }

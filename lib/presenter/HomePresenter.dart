@@ -6,6 +6,7 @@ import 'package:flutter_lihui/base/base_presenter.dart';
 import 'package:flutter_lihui/contract/home_contract.dart';
 import 'package:flutter_lihui/json_entity_model/banner_entity.dart';
 import 'package:flutter_lihui/json_entity_model/diary_entity.dart';
+import 'package:flutter_lihui/json_entity_model/file_entity.dart';
 import 'package:flutter_lihui/model/HomeModel.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -52,15 +53,12 @@ class HomePresenter extends BasePresenter<IHomeView> {
     String fileName = file.path.split('/').last;
 //    String filePath;
     ApiService.upload(fileName, file.path).then((response){
-      print('上传文件：${response.data}');
+      FileEntity bean = EntityFactory.generateOBJ<FileEntity>(response.data);
+      print('上传文件：${bean.toString()}');
     });
   }
 
   download(String fileName) {
-    if (!isViewAttached()) {
-      print("HomePresenter isViewAttached false");
-      return;
-    }
     _localPath.then((path){
       ApiService.download(fileName, path+"debut").then((response){
         print('下载文件：${response.data}');
