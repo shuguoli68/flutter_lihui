@@ -8,6 +8,8 @@ import 'package:flutter_lihui/presenter/HomePresenter.dart';
 import 'package:zeking_refresh/zeking_refresh.dart';
 import 'package:flutter_lihui/common/my_public.dart';
 
+import 'sub/DiaryDetailPage.dart';
+
 class MainHome extends StatefulWidget{
   @override
   State<StatefulWidget> createState() => _MainHme();
@@ -166,8 +168,7 @@ class _MainHme extends BaseState<MainHome, HomePresenter> with AutomaticKeepAliv
     DiaryItem item = datas[index];
     return GestureDetector(
       onTap: (){
-//        goTo(context, WebWidget(url: item.link,title: item.chapterName,));
-      mPresenter.download('1117.jpg');
+        DiaryDetailPage.goTo(context, item.diaryId);
       },
       child: Padding(padding: EdgeInsets.only(left: 5, right: 5, bottom: 5),child: Container(
         padding: EdgeInsets.all(5.0),

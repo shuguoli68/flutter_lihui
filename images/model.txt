@@ -34,6 +34,8 @@ class $DiaryDetail$Model implements I$DiaryDetail$Model{
 
 import 'package:flutter_lihui/base/base_presenter.dart';
 import 'package:flutter_lihui/model/$DiaryDetail$Model.dart';
+import 'package:flutter_lihui/http/api_service.dart';
+import '../entity_factory.dart';
 
 class $DiaryDetail$Presenter extends BasePresenter<I$DiaryDetail$View> {
 ///可调用mView、mModel
@@ -44,6 +46,20 @@ class $DiaryDetail$Presenter extends BasePresenter<I$DiaryDetail$View> {
     mModel = $DiaryDetail$Model();
   }
 
+  get$DiaryDetail$(){
+      if (!isViewAttached()) {
+        print("$DiaryDetail$Presenter isViewAttached false");
+        return;
+      }
+      ApiService.banner().then((response){
+        $DiaryDetail$Entity bean = EntityFactory.generateOBJ<$DiaryDetail$Entity>(response.data);
+        if(bean.code == 200) {
+          mView.on$DiaryDetail$(bean);
+        }else{
+          mView.onFail(bean.msg);
+        }
+      });
+    }
 }
 
 
@@ -62,6 +78,12 @@ import 'package:flutter_lihui/presenter/$DiaryDetail$Presenter.dart';
 import 'package:flutter_lihui/view/common/app_bar.dart';
 
 class $DiaryDetail$Page extends StatefulWidget {
+
+  ///跳转至该页面
+  static dynamic goTo(BuildContext context, String id) async{
+    return await Navigator.pushNamed(context, '/$DiaryDetail$Page',arguments: id);
+  }
+
   @override
   State<StatefulWidget> createState() => _$DiaryDetail$Page();
 }
@@ -72,6 +94,7 @@ class _$DiaryDetail$Page extends BaseState<$DiaryDetail$Page, $DiaryDetail$Prese
   void initStat() {
     mPresenter = new $DiaryDetail$Presenter();
     mPresenter.attachView(this);
+    mPresenter.get$DiaryDetail$();
   }
   @override
   Widget build(BuildContext context) {
@@ -83,6 +106,7 @@ class _$DiaryDetail$Page extends BaseState<$DiaryDetail$Page, $DiaryDetail$Prese
 
   _body(){
     if(){
+      String diaryId = ModalRoute.of(context).settings.arguments;
       return Center(child: Text('数据加载中...'),);
     }else{
       return Column(children: <Widget>[

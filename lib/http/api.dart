@@ -14,5 +14,6 @@ class Api {
   static final String allTheme = '/diaryTheme/list';
   static final String addDiary = '/diary/add';
   static final String allTag = '/diaryTag/list';
+  static final String queryDiary = '/diary/query';
 
 }

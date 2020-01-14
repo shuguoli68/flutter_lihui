@@ -139,4 +139,14 @@ class ApiService{
     return base(Api.allTag, req:req);
   }
 
+  ///
+  ///根据id获取diary
+  ///
+  static Future<Response> queryDiary(String diaryId)async{
+    Map<String, dynamic> req = {
+      "diaryId": diaryId
+    };
+    return base(Api.queryDiary, req:req);
+  }
+
 }
