@@ -10,12 +10,15 @@ import 'json_entity_model/diary_entity.dart';
 import 'json_entity_model/diary_tag_entity.dart';
 import 'json_entity_model/diary_theme_entity.dart';
 import 'json_entity_model/file_entity.dart';
+import 'json_entity_model/sign_entity.dart';
 
 class EntityFactory {
   static T generateOBJ<T>(json) {
     if (1 == 0) {
       return null;
-    } else if (T.toString() == "FileEntity") {
+    } else if (T.toString() == "SignEntity") {
+      return SignEntity.fromJson(json) as T;
+    }else if (T.toString() == "FileEntity") {
       return FileEntity.fromJson(json) as T;
     } else if (T.toString() == "DiaryTagEntity") {
       return DiaryTagEntity.fromJson(json) as T;

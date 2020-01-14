@@ -32,6 +32,7 @@ class _MainHme extends BaseState<MainHome, HomePresenter> with AutomaticKeepAliv
     mPresenter.attachView(this);
     _refreshController = ZekingRefreshController();
     _refreshController.refreshingWithLoadingView();
+    mPresenter.querySign(MyConfig.userId);
   }
 
   @override
@@ -111,8 +112,42 @@ class _MainHme extends BaseState<MainHome, HomePresenter> with AutomaticKeepAliv
     }
   }
 
+  ///签到对话框
+  @override
+  void addSign(String userId){
+    showDialog(context: context,barrierDismissible: false,builder: (context){
+      return WillPopScope(
+        child: AlertDialog(
+          title: Text('签到'),
+          content: Text('签到送积分，连续签到积分更高'),
+          backgroundColor: Colors.white,
+          elevation: 20,
+          semanticLabel: 'this is a dialog',
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          actions: <Widget>[
+            FlatButton(onPressed: (){
+              mPresenter.addSign(userId);
+              Navigator.of(context).pop();
+            }, child: Text('签到')),
+
+            FlatButton(onPressed: (){
+//            Navigator.of(context).pop();
+            }, child: Text('签到记录')),
+          ],
+        ),
+        onWillPop: (){ return Future.value(false); }
+      );
+    });
+  }
+
+  @override
+  void signIn(){
+    myToast('签到成功!');
+  }
+
   @override
   void onFail(String e) {
+    myToast(e);
   }
 
   @override

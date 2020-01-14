@@ -10,6 +10,8 @@ class Api {
   static final String logout = '/logout';
   static final String register = '/register';
   static final String banner = '/banner/list';
+  static final String querySign = '/sign/queryById';
+  static final String addSign = '/sign/add';
   static final String diaryList = '/diary/list';
   static final String allTheme = '/diaryTheme/list';
   static final String addDiary = '/diary/add';

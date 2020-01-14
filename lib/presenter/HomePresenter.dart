@@ -5,8 +5,10 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter_lihui/base/base_presenter.dart';
 import 'package:flutter_lihui/contract/home_contract.dart';
 import 'package:flutter_lihui/json_entity_model/banner_entity.dart';
+import 'package:flutter_lihui/json_entity_model/common_bool_entity.dart';
 import 'package:flutter_lihui/json_entity_model/diary_entity.dart';
 import 'package:flutter_lihui/json_entity_model/file_entity.dart';
+import 'package:flutter_lihui/json_entity_model/sign_entity.dart';
 import 'package:flutter_lihui/model/HomeModel.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -44,6 +46,34 @@ class HomePresenter extends BasePresenter<IHomeView> {
     ApiService.diaryList(page).then((response){
       DiaryEntity bean = EntityFactory.generateOBJ<DiaryEntity>(response.data);
       mView.onDiary(bean, isRefresh);
+    });
+  }
+
+  querySign(String userId) {
+    if (!isViewAttached()) {
+      print("HomePresenter isViewAttached false");
+      return;
+    }
+    ApiService.querySign(userId).then((response){
+      SignEntity bean = EntityFactory.generateOBJ<SignEntity>(response.data);
+      if(bean.code == 200 && bean.data.isEmpty) {
+        mView.addSign(userId);
+      }
+    });
+  }
+
+  addSign(String userId) {
+    if (!isViewAttached()) {
+      print("HomePresenter isViewAttached false");
+      return;
+    }
+    ApiService.addSign(userId).then((response){
+      CommonBoolEntity bean = EntityFactory.generateOBJ<CommonBoolEntity>(response.data);
+      if(bean.code == 200) {
+        mView.signIn();
+      }else{
+        mView.onFail(bean.msg);
+      }
     });
   }
   

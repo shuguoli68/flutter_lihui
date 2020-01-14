@@ -14,4 +14,6 @@ abstract class IHomeView extends BaseView {
   void onBanner(List<BannerItem> data);
   void onDiary(DiaryEntity data, bool isRefresh);
   void onFail(String e);
+  void addSign(String userId);
+  void signIn();
 }

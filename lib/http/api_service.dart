@@ -93,6 +93,26 @@ class ApiService{
   }
 
   ///
+  ///查询今天是否签到
+  ///
+  static Future<Response> querySign(String userId)async{
+    Map<String, dynamic> req = {
+      "userId": userId
+    };
+    return base(Api.querySign, req:req);
+  }
+
+  ///
+  ///签到
+  ///
+  static Future<Response> addSign(String userId)async{
+    Map<String, dynamic> req = {
+      "userId": userId
+    };
+    return base(Api.addSign, req:req);
+  }
+
+  ///
   ///获取diary列表
   ///
   static Future<Response> diaryList(int page)async{
