@@ -180,7 +180,7 @@ class _MainHme extends BaseState<MainHome, HomePresenter> with AutomaticKeepAliv
           children: <Widget>[
             Flex(direction: Axis.horizontal,children: <Widget>[
               ClipOval(
-                child: Image.asset('images/default.png',width: 50,height: 50,fit: BoxFit.fitHeight,),
+                child: Image.asset('images/img.png',width: 50,height: 50,fit: BoxFit.fitHeight,),
               ),
               Expanded(flex:1, child: Padding(padding: EdgeInsets.only(left: 5),child: Text(item.title, style: TextStyle(fontSize: 16),maxLines: 3,),),),
 

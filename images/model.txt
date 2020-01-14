@@ -1,0 +1,119 @@
+
+import 'package:flutter_lihui/base/base_view.dart';
+
+abstract class I$DiaryDetail$Model {
+  get$DiaryDetail$();
+}
+
+abstract class I$DiaryDetail$View extends BaseView {
+  @override
+  void showLoading();
+  @override
+  void hideLoading();
+  void on$DiaryDetail$($DiaryDetail$Entity data);
+  void onFail(String e);
+}
+
+
+
+
+
+
+import 'package:flutter_lihui/contract/$DiaryDetail$_contract.dart';
+
+class $DiaryDetail$Model implements I$DiaryDetail$Model{
+  @override
+  get$DiaryDetail$() {
+
+  }
+}
+
+
+
+
+
+import 'package:flutter_lihui/base/base_presenter.dart';
+import 'package:flutter_lihui/model/$DiaryDetail$Model.dart';
+
+class $DiaryDetail$Presenter extends BasePresenter<I$DiaryDetail$View> {
+///可调用mView、mModel
+
+  I$DiaryDetail$Model mModel;
+
+  $DiaryDetail$Presenter() {
+    mModel = $DiaryDetail$Model();
+  }
+
+}
+
+
+
+
+
+
+
+
+import 'package:flutter/material.dart';
+import 'package:flutter_lihui/base/base_state.dart';
+import 'package:flutter_lihui/common/my_public.dart';
+import 'package:flutter_lihui/contract/$DiaryDetail$_contract.dart';
+import 'package:flutter_lihui/json_entity_model/$DiaryDetail$_entity.dart';
+import 'package:flutter_lihui/presenter/$DiaryDetail$Presenter.dart';
+import 'package:flutter_lihui/view/common/app_bar.dart';
+
+class $DiaryDetail$Page extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _$DiaryDetail$Page();
+}
+
+class _$DiaryDetail$Page extends BaseState<$DiaryDetail$Page, $DiaryDetail$Presenter> implements I$DiaryDetail$View {
+
+  @override
+  void initStat() {
+    mPresenter = new $DiaryDetail$Presenter();
+    mPresenter.attachView(this);
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: MyAppBar().simAppBar('$DiaryDetail$'),
+      body: _body(),
+    );
+  }
+
+  _body(){
+    if(){
+      return Center(child: Text('数据加载中...'),);
+    }else{
+      return Column(children: <Widget>[
+
+      ],);
+    }
+  }
+
+  @override
+  void dispos() {
+
+  }
+
+  @override
+  void on$DiaryDetail$(DiaryEntity data) {
+
+  }
+
+  @override
+  void onFail(String e) {
+    print('$DiaryDetail$Page失败：'+e);
+  }
+
+  @override
+  void hideLoading() {
+
+  }
+
+  @override
+  void showLoading() {
+
+  }
+}
+
