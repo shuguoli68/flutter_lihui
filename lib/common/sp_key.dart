@@ -1,4 +1,4 @@
-import 'package:shared_preferences/shared_preferences.dart';
+//import 'package:shared_preferences/shared_preferences.dart';
 
 class SPKey{
   //主题
@@ -15,7 +15,7 @@ class SPKey{
   static const String COOKIE = "COOKIE";
 
   static _share()async{
-    return await SharedPreferences.getInstance();
+//    return await SharedPreferences.getInstance();
   }
 
   static spSetStr(String key, String value) async {

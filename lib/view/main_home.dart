@@ -167,6 +167,7 @@ class _MainHme extends BaseState<MainHome, HomePresenter> with AutomaticKeepAliv
     return GestureDetector(
       onTap: (){
 //        goTo(context, WebWidget(url: item.link,title: item.chapterName,));
+      mPresenter.download('1117.jpg');
       },
       child: Padding(padding: EdgeInsets.only(left: 5, right: 5, bottom: 5),child: Container(
         padding: EdgeInsets.all(5.0),

@@ -23,4 +23,11 @@ class FileEntity {
         data['size'] = this.size;
         return data;
     }
+
+    @override
+    String toString() {
+        return 'FileEntity{fileName: $fileName, filePath: $filePath, fileType: $fileType, size: $size}';
+    }
+
+
 }

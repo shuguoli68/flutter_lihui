@@ -49,10 +49,11 @@ class HomePresenter extends BasePresenter<IHomeView> {
   
   upload() async{
     File file = await FilePicker.getFile();
-    print(file.path + ',${file.lastAccessedSync().toIso8601String()}');
+    print('上传：'+file.path);
     String fileName = file.path.split('/').last;
-//    String filePath;
-    ApiService.upload(fileName, file.path).then((response){
+    ApiService.upload(fileName, file.path, (count, total){
+      print('上传进度：$count, $total}');
+    }).then((response){
       FileEntity bean = EntityFactory.generateOBJ<FileEntity>(response.data);
       print('上传文件：${bean.toString()}');
     });
@@ -60,7 +61,11 @@ class HomePresenter extends BasePresenter<IHomeView> {
 
   download(String fileName) {
     _localPath.then((path){
-      ApiService.download(fileName, path+"debut").then((response){
+      print('存储：$path');
+      ApiService.download(fileName, path+"/"+fileName, (count, total){
+        print('下载进度：$count, $total}');
+      }).then((response){
+        //不需要管response，直接查看下载进度
         print('下载文件：${response.data}');
       });
     });

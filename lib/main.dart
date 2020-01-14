@@ -15,11 +15,11 @@ void main() {
 
   providers.provide(Provider.function((context)=> ThemeProvide()));
 
-  int themeIndex;
-  SPKey.spGetInt(SPKey.themeIndex).then((onValue){
-    log('theme:$themeIndex, $onValue');
-    themeIndex = onValue;
-  });
+  int themeIndex = 0;
+//  SPKey.spGetInt(SPKey.themeIndex).then((onValue){
+//    log('theme:$themeIndex, $onValue');
+//    themeIndex = onValue;
+//  });
   themeIndex =  null == themeIndex ? 0 : themeIndex;
   runApp(ProviderNode(child: MyApp(themeIndex: themeIndex,), providers: providers));
 }
@@ -67,13 +67,13 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     LogUtil.init(isDebug: MyConfig.logIsDebug, title: MyConfig.logTitle,);
     timer = Timer(const Duration(milliseconds: 150),(){
-      SPKey.spGetBool(SPKey.IS_LOGIN).then((onValue){
+//      SPKey.spGetBool(SPKey.IS_LOGIN).then((onValue){
 //        if(onValue){
 //          goToRm(context, MainApp());
 //        }else{
           goToRm(context, Login());
 //        }
-      });
+//      });
     });
   }
 
