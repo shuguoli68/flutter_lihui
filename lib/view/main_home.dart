@@ -9,6 +9,7 @@ import 'package:zeking_refresh/zeking_refresh.dart';
 import 'package:flutter_lihui/common/my_public.dart';
 
 import 'sub/DiaryDetailPage.dart';
+import 'sub/SignRecordPage.dart';
 
 class MainHome extends StatefulWidget{
   @override
@@ -131,7 +132,7 @@ class _MainHme extends BaseState<MainHome, HomePresenter> with AutomaticKeepAliv
             }, child: Text('签到')),
 
             FlatButton(onPressed: (){
-//            Navigator.of(context).pop();
+              SignRecordPage.goTo(context, '');
             }, child: Text('签到记录')),
           ],
         ),

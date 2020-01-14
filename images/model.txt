@@ -121,7 +121,7 @@ class _$DiaryDetail$Page extends BaseState<$DiaryDetail$Page, $DiaryDetail$Prese
   }
 
   @override
-  void on$DiaryDetail$(DiaryEntity data) {
+  void on$DiaryDetail$($DiaryDetail$Entity data) {
 
   }
 

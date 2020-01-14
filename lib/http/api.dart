@@ -12,6 +12,7 @@ class Api {
   static final String banner = '/banner/list';
   static final String querySign = '/sign/queryById';
   static final String addSign = '/sign/add';
+  static final String signRecord = '/sign/listById';
   static final String diaryList = '/diary/list';
   static final String allTheme = '/diaryTheme/list';
   static final String addDiary = '/diary/add';

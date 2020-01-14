@@ -113,6 +113,16 @@ class ApiService{
   }
 
   ///
+  ///签到记录
+  ///
+  static Future<Response> signRecord(String userId)async{
+    Map<String, dynamic> req = {
+      "userId": userId
+    };
+    return base(Api.signRecord, req:req);
+  }
+
+  ///
   ///获取diary列表
   ///
   static Future<Response> diaryList(int page)async{
