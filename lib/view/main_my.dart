@@ -5,7 +5,11 @@ class MainMy extends StatefulWidget{
   State<StatefulWidget> createState() => _MainMy();
 }
 
-class _MainMy extends State<MainMy>{
+class _MainMy extends State<MainMy> with AutomaticKeepAliveClientMixin{
+
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -38,6 +38,7 @@ class _MainNavigation extends State<MainNavigation>{
       bottomNavigationBar:BottomNavigationBar(items: [
         bng[0],bng[1],bng[2],bng[3],bng[4]
       ],
+      key: ObjectKey(_currentIndex),
       currentIndex: _currentIndex,
       fixedColor: Colors.blue,
       type: BottomNavigationBarType.fixed,

@@ -5,7 +5,11 @@ class MainRank extends StatefulWidget{
   State<StatefulWidget> createState() => _MainRank();
 }
 
-class _MainRank extends State<MainRank>{
+class _MainRank extends State<MainRank> with AutomaticKeepAliveClientMixin{
+
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
