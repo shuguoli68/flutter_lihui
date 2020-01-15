@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lihui/common/my_public.dart';
 import 'package:flutter_lihui/json_entity_model/login_entity.dart';
 
+import 'sub/SettingPage.dart';
+
 class MainMy extends StatefulWidget{
   @override
   State<StatefulWidget> createState() => _MainMy();
@@ -41,7 +43,7 @@ class _MainMy extends State<MainMy> with AutomaticKeepAliveClientMixin{
     return Container(
       width: double.maxFinite,
       padding: EdgeInsets.all(10.0),
-      color: Colors.white,
+      color: Theme.of(context).primaryColor,
       child: Column(children: <Widget>[
         Flex(direction: Axis.horizontal,children: <Widget>[
           ClipOval(
@@ -52,7 +54,7 @@ class _MainMy extends State<MainMy> with AutomaticKeepAliveClientMixin{
             Padding(padding: EdgeInsets.only(left: 5),child: Text(user.userId),),
           ],),
           Expanded(flex:1, child: Container()),
-          IconButton(icon: Icon(Icons.settings), onPressed: (){})
+          IconButton(icon: Icon(Icons.settings), onPressed: (){ SettingPage.goTo(context, ''); })
         ],),
         Padding(padding: EdgeInsets.all(5.0)),
         Flex(direction: Axis.horizontal, children: <Widget>[
