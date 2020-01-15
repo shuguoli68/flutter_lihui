@@ -24,10 +24,7 @@ class _MainMy extends State<MainMy> with AutomaticKeepAliveClientMixin{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        padding:EdgeInsets.all(10.0),
-        width: double.maxFinite,
-        height: double.maxFinite,
+      body: SingleChildScrollView(
         child: Column(children: <Widget>[
           _headView(),
           _centerView(),
