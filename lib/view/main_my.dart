@@ -24,49 +24,64 @@ class _MainMy extends State<MainMy> with AutomaticKeepAliveClientMixin{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(children: <Widget>[
-          _headView(),
-          _centerView(),
-          _bottomView()
-        ],),
+      backgroundColor: Color(baseBg),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(children: <Widget>[
+            _headView(),
+            _centerView(),
+            _bottomView()
+          ],),
+        ),
       ),
     );
   }
 
   _headView() {
-    return Column(children: <Widget>[
-      Row(children: <Widget>[
-        ClipOval(
-          child: Image.asset('images/img.png',width: 50,height: 50,fit: BoxFit.fitHeight,),
-        ),
-        Flex(direction: Axis.vertical,children: <Widget>[
-          Expanded(flex:1, child: Padding(padding: EdgeInsets.only(left: 5),child: Text(user.name),),),
-          Expanded(flex:1, child: Padding(padding: EdgeInsets.only(left: 5),child: Text(user.userId),),),
+    return Container(
+      width: double.maxFinite,
+      padding: EdgeInsets.all(10.0),
+      color: Colors.white,
+      child: Column(children: <Widget>[
+        Flex(direction: Axis.horizontal,children: <Widget>[
+          ClipOval(
+            child: Image.asset('images/img.png',width: 50,height: 50,fit: BoxFit.fitHeight,),
+          ),
+          Column(children: <Widget>[
+            Padding(padding: EdgeInsets.only(left: 5),child: Text(user.name),),
+            Padding(padding: EdgeInsets.only(left: 5),child: Text(user.userId),),
+          ],),
+          Expanded(flex:1, child: Container()),
+          IconButton(icon: Icon(Icons.settings), onPressed: (){})
         ],),
-        IconButton(icon: Icon(Icons.settings), onPressed: (){})
+        Padding(padding: EdgeInsets.all(5.0)),
+        Flex(direction: Axis.horizontal, children: <Widget>[
+          Expanded(child: Text('关注'),),
+          Expanded(child: Text('粉丝'),),
+          Expanded(child: Text('浏览'),),
+          Expanded(child: Text('访客'),),
+        ],),
       ],),
-      Padding(padding: EdgeInsets.all(10.0)),
-      Row(children: <Widget>[
-        Text('关注'),
-        Text('粉丝'),
-        Text('浏览'),
-        Text('访客'),
-      ],),
-    ],);
+    );
   }
 
   _centerView() {
     return Container(
+      height: 200.0,
+      width: double.maxFinite,
       padding: EdgeInsets.all(10.0),
       margin: EdgeInsets.all(10.0),
+      color: Colors.white,
     );
   }
 
   _bottomView() {
     return Container(
+      height: 200.0,
+      width: double.maxFinite,
       padding: EdgeInsets.all(10.0),
       margin: EdgeInsets.all(10.0),
+      color: Colors.white,
     );
   }
 
