@@ -2,7 +2,6 @@
 import 'package:flutter_lihui/json_entity_model/login_entity.dart';
 import 'package:flutter_lihui/json_entity_model/publish_entity.dart';
 import 'package:flutter_lihui/json_entity_model/test_entity.dart';
-import 'package:flutter_lihui/json_entity_model/user_entity.dart';
 
 import 'json_entity_model/banner_entity.dart';
 import 'json_entity_model/common_bool_entity.dart';
@@ -36,9 +35,7 @@ class EntityFactory {
       return PublishEntity.fromJson(json) as T;
     } else if (T.toString() == "TestEntity") {
       return TestEntity.fromJson(json) as T;
-    } else if (T.toString() == "UserEntity") {
-      return UserEntity.fromJson(json) as T;
-    } else {
+    }  else {
       return null;
     }
   }

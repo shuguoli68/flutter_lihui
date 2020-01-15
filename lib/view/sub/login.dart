@@ -133,6 +133,7 @@ class _Login extends State<Login>{
         SPKey.spSetStr(SPKey.USER_NAME, bean.data.userId);
         SPKey.spSetStr(SPKey.PASS_WORD, bean.data.passWord);
         MyConfig.userId = bean.data.userId;
+        MyConfig.user = bean.data;
         print('登录 name:${name},pwd:$pwd,bean:${bean.toJson()}');
         goToRm(context, MainApp());
       }else{

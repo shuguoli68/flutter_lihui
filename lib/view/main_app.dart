@@ -14,15 +14,6 @@ class _MainApp extends State<MainApp>{
   Widget build(BuildContext context) {
     return WillPopScope(
         child: Scaffold(
-          drawer: Drawer(child: HomeDrawer(context).homeDrawer(),),
-          appBar: AppBar(
-            title: Text('LiHui'),
-            leading: null,
-            actions: <Widget>[
-              IconButton(icon: Icon(Icons.search), onPressed: () {  }),
-              IconButton(icon: Icon(Icons.add), onPressed: () {  }),
-            ],
-          ),
           body: MainNavigation()
         ),
         onWillPop: _onWillPop);

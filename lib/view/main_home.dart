@@ -10,6 +10,7 @@ import 'package:flutter_lihui/common/my_public.dart';
 
 import 'sub/DiaryDetailPage.dart';
 import 'sub/SignRecordPage.dart';
+import 'sub/home_drawer.dart';
 
 class MainHome extends StatefulWidget{
   @override
@@ -40,6 +41,15 @@ class _MainHme extends BaseState<MainHome, HomePresenter> with AutomaticKeepAliv
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(baseBg),
+      drawer: Drawer(child: HomeDrawer(context).homeDrawer(),),
+      appBar: AppBar(
+        title: Text('LiHui'),
+        leading: null,
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.search), onPressed: () {  }),
+          IconButton(icon: Icon(Icons.add), onPressed: () {  }),
+        ],
+      ),
       body: ZekingRefresh(
         controller: _refreshController,
         onRefresh: onRefresh,
