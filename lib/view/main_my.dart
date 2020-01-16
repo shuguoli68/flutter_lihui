@@ -3,6 +3,7 @@ import 'package:flutter_lihui/common/my_public.dart';
 import 'package:flutter_lihui/http/api.dart';
 import 'package:flutter_lihui/json_entity_model/login_entity.dart';
 
+import 'sub/FootPage.dart';
 import 'sub/LovePage.dart';
 import 'sub/SettingPage.dart';
 
@@ -63,8 +64,8 @@ class _MainMy extends State<MainMy> with AutomaticKeepAliveClientMixin{
         Flex(direction: Axis.horizontal,mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
           Expanded(child: GestureDetector(child:Text('868'+'\n关注', textAlign: TextAlign.center,),onTap: (){ LovePage.goTo(context, 0); },)),
           Expanded(child: GestureDetector(child:Text('123'+'\n粉丝', textAlign: TextAlign.center),onTap: (){ LovePage.goTo(context, 1); },)),
-          Expanded(child: GestureDetector(child: Text('325'+'\n浏览', textAlign: TextAlign.center),onTap: (){ myToast('浏览'); },),),
-          Expanded(child: GestureDetector(child: Text('5687'+'\n访客', textAlign: TextAlign.center),onTap: (){ myToast('访客'); },)),
+          Expanded(child: GestureDetector(child: Text('325'+'\n浏览', textAlign: TextAlign.center),onTap: (){ FootPage.goTo(context, 0); },),),
+          Expanded(child: GestureDetector(child: Text('5687'+'\n访客', textAlign: TextAlign.center),onTap: (){ FootPage.goTo(context, 1); },)),
         ],),
         Padding(padding: EdgeInsets.all(5.0)),
       ],),

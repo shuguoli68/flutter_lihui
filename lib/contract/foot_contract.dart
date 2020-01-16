@@ -11,6 +11,6 @@ abstract class IFootView extends BaseView {
   void showLoading();
   @override
   void hideLoading();
-  void onFoot(FootEntity data);
+  void onFoot(FootEntity data, bool isRefresh);
   void onFail(String e);
 }

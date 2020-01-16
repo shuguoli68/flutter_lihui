@@ -1,5 +1,6 @@
 import 'package:flutter_lihui/view/common/input_page.dart';
 import 'package:flutter_lihui/view/sub/DiaryDetailPage.dart';
+import 'package:flutter_lihui/view/sub/FootPage.dart';
 import 'package:flutter_lihui/view/sub/LovePage.dart';
 import 'package:flutter_lihui/view/sub/SettingPage.dart';
 import 'package:flutter_lihui/view/sub/SignRecordPage.dart';
@@ -17,6 +18,7 @@ class BaseRoute {
       '/DiaryDetailPage': (context) => DiaryDetailPage(),
       '/SettingPage': (context) => SettingPage(),
       '/LovePage': (context) => LovePage(),
+      '/FootPage': (context) => FootPage(),
     };
   }
 

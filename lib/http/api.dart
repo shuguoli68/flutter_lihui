@@ -21,5 +21,7 @@ class Api {
   static final String queryDiary = '/diary/query';
   static final String queryLove = '/love/queryLove';
   static final String queryFan = '/love/queryFan';
+  static final String queryBrowse = '/foot/queryBrowse';
+  static final String queryFoot = '/foot/queryFoot';
 
 }
