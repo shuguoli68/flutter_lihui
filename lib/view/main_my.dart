@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_lihui/common/my_public.dart';
+import 'package:flutter_lihui/http/api.dart';
 import 'package:flutter_lihui/json_entity_model/login_entity.dart';
 
 import 'sub/SettingPage.dart';
@@ -47,22 +48,24 @@ class _MainMy extends State<MainMy> with AutomaticKeepAliveClientMixin{
       child: Column(children: <Widget>[
         Flex(direction: Axis.horizontal,children: <Widget>[
           ClipOval(
-            child: Image.asset('images/img.png',width: 50,height: 50,fit: BoxFit.fitHeight,),
+            child: FadeInImage.assetNetwork(placeholder:'images/img.png',image: Api.fileUrl+'enjoy.png', width: 50,height: 50,fit: BoxFit.fitHeight,),
           ),
-          Column(children: <Widget>[
-            Padding(padding: EdgeInsets.only(left: 5),child: Text(user.name),),
-            Padding(padding: EdgeInsets.only(left: 5),child: Text(user.userId),),
+          Padding(padding: EdgeInsets.all(5.0)),
+          Column(mainAxisAlignment:MainAxisAlignment.start,children: <Widget>[
+            Padding(padding: EdgeInsets.only(left: 5),child: Text(user.name, textAlign: TextAlign.left),),
+            Padding(padding: EdgeInsets.only(left: 5),child: Text(user.userId, textAlign: TextAlign.left),),
           ],),
           Expanded(flex:1, child: Container()),
           IconButton(icon: Icon(Icons.settings), onPressed: (){ SettingPage.goTo(context, ''); })
         ],),
-        Padding(padding: EdgeInsets.all(5.0)),
-        Flex(direction: Axis.horizontal, children: <Widget>[
-          Expanded(child: Text('关注'),),
-          Expanded(child: Text('粉丝'),),
-          Expanded(child: Text('浏览'),),
-          Expanded(child: Text('访客'),),
+        Padding(padding: EdgeInsets.all(10.0)),
+        Flex(direction: Axis.horizontal,mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
+          Expanded(child: GestureDetector(child:Text('868'+'\n关注', textAlign: TextAlign.center,),onTap: (){ myToast('关注'); },)),
+          Expanded(child: GestureDetector(child:Text('123'+'\n粉丝', textAlign: TextAlign.center),onTap: (){ myToast('粉丝'); },)),
+          Expanded(child: GestureDetector(child: Text('325'+'\n浏览', textAlign: TextAlign.center),onTap: (){ myToast('浏览'); },),),
+          Expanded(child: GestureDetector(child: Text('5687'+'\n访客', textAlign: TextAlign.center),onTap: (){ myToast('访客'); },)),
         ],),
+        Padding(padding: EdgeInsets.all(5.0)),
       ],),
     );
   }
