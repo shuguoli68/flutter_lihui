@@ -19,5 +19,7 @@ class Api {
   static final String addDiary = '/diary/add';
   static final String allTag = '/diaryTag/list';
   static final String queryDiary = '/diary/query';
+  static final String queryLove = '/love/queryLove';
+  static final String queryFan = '/love/queryFan';
 
 }

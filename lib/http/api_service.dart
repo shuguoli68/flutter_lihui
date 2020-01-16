@@ -179,4 +179,14 @@ class ApiService{
     return base(Api.queryDiary, req:req);
   }
 
+  ///
+  ///根据id获取关注、粉丝列表
+  ///
+  static Future<Response> queryLove(String userId, int loveFans)async{
+    Map<String, dynamic> req = {
+      "userId": userId
+    };
+    String url = loveFans==0?Api.queryLove:Api.queryFan;
+    return base(url, req:req);
+  }
 }

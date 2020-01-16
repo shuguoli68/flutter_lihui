@@ -9,13 +9,19 @@ import 'json_entity_model/diary_entity.dart';
 import 'json_entity_model/diary_tag_entity.dart';
 import 'json_entity_model/diary_theme_entity.dart';
 import 'json_entity_model/file_entity.dart';
+import 'json_entity_model/foot_entity.dart';
+import 'json_entity_model/love_entity.dart';
 import 'json_entity_model/sign_entity.dart';
 
 class EntityFactory {
   static T generateOBJ<T>(json) {
     if (1 == 0) {
       return null;
-    } else if (T.toString() == "SignEntity") {
+    } else if (T.toString() == "LoveEntity") {
+      return LoveEntity.fromJson(json) as T;
+    }else if (T.toString() == "FootEntity") {
+      return FootEntity.fromJson(json) as T;
+    }else if (T.toString() == "SignEntity") {
       return SignEntity.fromJson(json) as T;
     }else if (T.toString() == "FileEntity") {
       return FileEntity.fromJson(json) as T;
