@@ -46,7 +46,7 @@ class _MainHme extends BaseState<MainHome, HomePresenter> with AutomaticKeepAliv
         title: Text('LiHui'),
         leading: null,
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.search), onPressed: () {  }),
+          IconButton(icon: Icon(Icons.search), onPressed: () { myToast('Search'); }),
           IconButton(icon: Icon(Icons.add), onPressed: () {  }),
         ],
       ),
