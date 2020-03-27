@@ -1,7 +1,7 @@
 
 import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
+//import 'package:file_picker/file_picker.dart';
 import 'package:flutter_lihui/base/base_presenter.dart';
 import 'package:flutter_lihui/contract/home_contract.dart';
 import 'package:flutter_lihui/json_entity_model/banner_entity.dart';
@@ -78,7 +78,7 @@ class HomePresenter extends BasePresenter<IHomeView> {
   }
   
   upload() async{
-    File file = await FilePicker.getFile();
+    /*File file = await FilePicker.getFile();
     print('上传：'+file.path);
     String fileName = file.path.split('/').last;
     ApiService.upload(fileName, file.path, (count, total){
@@ -86,7 +86,7 @@ class HomePresenter extends BasePresenter<IHomeView> {
     }).then((response){
       FileEntity bean = EntityFactory.generateOBJ<FileEntity>(response.data);
       print('上传文件：${bean.toString()}');
-    });
+    });*/
   }
 
   download(String fileName) {
