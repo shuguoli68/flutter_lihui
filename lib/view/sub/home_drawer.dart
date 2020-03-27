@@ -7,6 +7,7 @@ import 'package:flutter_lihui/common/theme_colors.dart';
 import 'package:flutter_lihui/common/theme_provide.dart';
 import 'package:provide/provide.dart';
 
+import 'SignRecordPage.dart';
 import 'login.dart';
 
 
@@ -92,10 +93,10 @@ class HomeDrawer {
             ),
           ),
           child: ListTile(
-            leading: CircleAvatar(child: Text('藏'),),
-            title: Text('收藏列表'),
+            leading: CircleAvatar(child: Text('签'),),
+            title: Text('签到记录'),
             onTap: (){
-
+              SignRecordPage.goTo(context, '');
             },
           ),
         ),

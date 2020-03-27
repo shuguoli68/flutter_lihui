@@ -8,6 +8,10 @@ import 'package:flutter_lihui/presenter/HomePresenter.dart';
 import 'package:zeking_refresh/zeking_refresh.dart';
 import 'package:flutter_lihui/common/my_public.dart';
 
+import 'sub/DiaryDetailPage.dart';
+import 'sub/SignRecordPage.dart';
+import 'sub/home_drawer.dart';
+
 class MainHome extends StatefulWidget{
   @override
   State<StatefulWidget> createState() => _MainHme();
@@ -30,12 +34,22 @@ class _MainHme extends BaseState<MainHome, HomePresenter> with AutomaticKeepAliv
     mPresenter.attachView(this);
     _refreshController = ZekingRefreshController();
     _refreshController.refreshingWithLoadingView();
+    mPresenter.querySign(MyConfig.userId);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(baseBg),
+      drawer: Drawer(child: HomeDrawer(context).homeDrawer(),),
+      appBar: AppBar(
+        title: Text('LiHui'),
+        leading: null,
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.search), onPressed: () {  }),
+          IconButton(icon: Icon(Icons.add), onPressed: () {  }),
+        ],
+      ),
       body: ZekingRefresh(
         controller: _refreshController,
         onRefresh: onRefresh,
@@ -109,8 +123,42 @@ class _MainHme extends BaseState<MainHome, HomePresenter> with AutomaticKeepAliv
     }
   }
 
+  ///签到对话框
+  @override
+  void addSign(String userId){
+    showDialog(context: context,barrierDismissible: false,builder: (context){
+      return WillPopScope(
+        child: AlertDialog(
+          title: Text('签到'),
+          content: Text('签到送积分，连续签到积分更高'),
+          backgroundColor: Colors.white,
+          elevation: 20,
+          semanticLabel: 'this is a dialog',
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          actions: <Widget>[
+            FlatButton(onPressed: (){
+              mPresenter.addSign(userId);
+              Navigator.of(context).pop();
+            }, child: Text('签到')),
+
+            FlatButton(onPressed: (){
+              SignRecordPage.goTo(context, '');
+            }, child: Text('签到记录')),
+          ],
+        ),
+        onWillPop: (){ return Future.value(false); }
+      );
+    });
+  }
+
+  @override
+  void signIn(){
+    myToast('签到成功!');
+  }
+
   @override
   void onFail(String e) {
+    myToast(e);
   }
 
   @override
@@ -166,7 +214,7 @@ class _MainHme extends BaseState<MainHome, HomePresenter> with AutomaticKeepAliv
     DiaryItem item = datas[index];
     return GestureDetector(
       onTap: (){
-//        goTo(context, WebWidget(url: item.link,title: item.chapterName,));
+        DiaryDetailPage.goTo(context, item.diaryId);
       },
       child: Padding(padding: EdgeInsets.only(left: 5, right: 5, bottom: 5),child: Container(
         padding: EdgeInsets.all(5.0),
@@ -179,7 +227,7 @@ class _MainHme extends BaseState<MainHome, HomePresenter> with AutomaticKeepAliv
           children: <Widget>[
             Flex(direction: Axis.horizontal,children: <Widget>[
               ClipOval(
-                child: Image.asset('images/default.png',width: 50,height: 50,fit: BoxFit.fitHeight,),
+                child: Image.asset('images/img.png',width: 50,height: 50,fit: BoxFit.fitHeight,),
               ),
               Expanded(flex:1, child: Padding(padding: EdgeInsets.only(left: 5),child: Text(item.title, style: TextStyle(fontSize: 16),maxLines: 3,),),),
 

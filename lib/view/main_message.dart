@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 
-class MainMessage extends StatefulWidget{
+class MainMessage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _MainMessage();
 }
 
-class _MainMessage extends State<MainMessage>{
+class _MainMessage extends State<MainMessage> with AutomaticKeepAliveClientMixin{
   static const listMax = 100;//列表最多加载条数
   static const loadingTag = "##loading##";//正在加载
   var _list =<String>[loadingTag];
+
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

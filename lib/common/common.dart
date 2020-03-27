@@ -44,4 +44,8 @@ numStr(int count){
   }
 }
 
+strTime(int tim){
+  return DateTime.fromMillisecondsSinceEpoch(tim);
+}
+
 

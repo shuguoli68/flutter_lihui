@@ -26,18 +26,20 @@ class LoginData {
 	String passWord;
 	int ctTime;
 	String phone;
+	String name;
 	int sex;
 	List<LoginDataDiary> diarys;
 	String userId;
 	int utTime;
 	int age;
 
-	LoginData({this.passWord, this.ctTime, this.phone, this.sex, this.diarys, this.userId, this.utTime, this.age});
+	LoginData({this.passWord, this.ctTime, this.phone, this.name, this.sex, this.diarys, this.userId, this.utTime, this.age});
 
 	LoginData.fromJson(Map<String, dynamic> json) {
 		passWord = json['passWord'];
 		ctTime = json['ctTime'];
 		phone = json['phone'];
+		name = json['name'];
 		sex = json['sex'];
 		if (json['diarys'] != null) {
 			diarys = new List<LoginDataDiary>();(json['diarys'] as List).forEach((v) { diarys.add(new LoginDataDiary.fromJson(v)); });
@@ -52,6 +54,7 @@ class LoginData {
 		data['passWord'] = this.passWord;
 		data['ctTime'] = this.ctTime;
 		data['phone'] = this.phone;
+		data['name'] = this.name;
 		data['sex'] = this.sex;
 		if (this.diarys != null) {
       data['diarys'] =  this.diarys.map((v) => v.toJson()).toList();

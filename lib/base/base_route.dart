@@ -1,4 +1,9 @@
 import 'package:flutter_lihui/view/common/input_page.dart';
+import 'package:flutter_lihui/view/sub/DiaryDetailPage.dart';
+import 'package:flutter_lihui/view/sub/FootPage.dart';
+import 'package:flutter_lihui/view/sub/LovePage.dart';
+import 'package:flutter_lihui/view/sub/SettingPage.dart';
+import 'package:flutter_lihui/view/sub/SignRecordPage.dart';
 import 'package:flutter_lihui/view/sub/tag_page.dart';
 
 class BaseRoute {
@@ -9,6 +14,11 @@ class BaseRoute {
     return {
       '/InputPage': (context) => InputPage(),
       '/TagPage': (context) => TagPage(),
+      '/SignRecordPage': (context) => SignRecordPage(),
+      '/DiaryDetailPage': (context) => DiaryDetailPage(),
+      '/SettingPage': (context) => SettingPage(),
+      '/LovePage': (context) => LovePage(),
+      '/FootPage': (context) => FootPage(),
     };
   }
 

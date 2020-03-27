@@ -51,7 +51,7 @@ class HttpUtils {
 //    });
 
     /// 打印请求相关信息：请求地址、请求方式、请求参数
-    LogUtil.d('请求地址：【' + method + '  ' + url + '】');
+    LogUtil.d('请求地址：【' + method + '  ' + Api.baseUrl+url + '】');
     LogUtil.d('请求参数：' + data.toString());
 
     Dio dio = createInstance();

@@ -1,0 +1,143 @@
+
+import 'package:flutter_lihui/base/base_view.dart';
+
+abstract class I$DiaryDetail$Model {
+  get$DiaryDetail$();
+}
+
+abstract class I$DiaryDetail$View extends BaseView {
+  @override
+  void showLoading();
+  @override
+  void hideLoading();
+  void on$DiaryDetail$($DiaryDetail$Entity data);
+  void onFail(String e);
+}
+
+
+
+
+
+
+import 'package:flutter_lihui/contract/$DiaryDetail$_contract.dart';
+
+class $DiaryDetail$Model implements I$DiaryDetail$Model{
+  @override
+  get$DiaryDetail$() {
+
+  }
+}
+
+
+
+
+
+import 'package:flutter_lihui/base/base_presenter.dart';
+import 'package:flutter_lihui/model/$DiaryDetail$Model.dart';
+import 'package:flutter_lihui/http/api_service.dart';
+import '../entity_factory.dart';
+
+class $DiaryDetail$Presenter extends BasePresenter<I$DiaryDetail$View> {
+///可调用mView、mModel
+
+  I$DiaryDetail$Model mModel;
+
+  $DiaryDetail$Presenter() {
+    mModel = $DiaryDetail$Model();
+  }
+
+  get$DiaryDetail$(){
+      if (!isViewAttached()) {
+        print("$DiaryDetail$Presenter isViewAttached false");
+        return;
+      }
+      ApiService.banner().then((response){
+        $DiaryDetail$Entity bean = EntityFactory.generateOBJ<$DiaryDetail$Entity>(response.data);
+        if(bean.code == 200) {
+          mView.on$DiaryDetail$(bean);
+        }else{
+          mView.onFail(bean.msg);
+        }
+      });
+    }
+}
+
+
+
+
+
+
+
+
+import 'package:flutter/material.dart';
+import 'package:flutter_lihui/base/base_state.dart';
+import 'package:flutter_lihui/common/my_public.dart';
+import 'package:flutter_lihui/contract/$DiaryDetail$_contract.dart';
+import 'package:flutter_lihui/json_entity_model/$DiaryDetail$_entity.dart';
+import 'package:flutter_lihui/presenter/$DiaryDetail$Presenter.dart';
+import 'package:flutter_lihui/view/common/app_bar.dart';
+
+class $DiaryDetail$Page extends StatefulWidget {
+
+  ///跳转至该页面
+  static dynamic goTo(BuildContext context, String id) async{
+    return await Navigator.pushNamed(context, '/$DiaryDetail$Page',arguments: id);
+  }
+
+  @override
+  State<StatefulWidget> createState() => _$DiaryDetail$Page();
+}
+
+class _$DiaryDetail$Page extends BaseState<$DiaryDetail$Page, $DiaryDetail$Presenter> implements I$DiaryDetail$View {
+
+  @override
+  void initStat() {
+    mPresenter = new $DiaryDetail$Presenter();
+    mPresenter.attachView(this);
+    mPresenter.get$DiaryDetail$();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: MyAppBar().simAppBar('$DiaryDetail$'),
+      body: _body(),
+    );
+  }
+
+  _body(){
+    if(){
+      String diaryId = ModalRoute.of(context).settings.arguments;
+      return Center(child: Text('数据加载中...'),);
+    }else{
+      return Column(children: <Widget>[
+
+      ],);
+    }
+  }
+
+  @override
+  void dispos() {
+
+  }
+
+  @override
+  void on$DiaryDetail$($DiaryDetail$Entity data) {
+
+  }
+
+  @override
+  void onFail(String e) {
+    print('$DiaryDetail$Page失败：'+e);
+  }
+
+  @override
+  void hideLoading() {
+
+  }
+
+  @override
+  void showLoading() {
+
+  }
+}
+

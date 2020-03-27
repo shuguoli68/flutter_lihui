@@ -32,23 +32,19 @@ class ApiService{
     return response;
   }
 
-  static Future<Response> download(String fileName, String savePath)async{
-//    Map<String, dynamic> req = {
-//      "fileName":fileName
-//    };
-//    var data = convert.jsonEncode(req);
+  static Future<Response> download(String fileName, String savePath, Function(int count, int total) fac)async{
     var response = await HttpUtils.createInstance().download(Api.baseUrl+Api.download+fileName, savePath, /*data: data,*/onReceiveProgress: (count, total){
-      print('下载文件：$count  总大小：$total');
+      fac(count, total);
     });
     return response;
   }
 
-  static Future<Response> upload(String fileName, String filePath)async{
+  static Future<Response> upload(String fileName, String filePath, Function(int count, int total) fac)async{
     FormData data = FormData.fromMap({
       "file": await MultipartFile.fromFile(filePath, filename: fileName)
     });
     var response = await HttpUtils.createInstance().post(Api.baseUrl+Api.upload, data: data,onSendProgress: (count, total){
-      print('上传文件：$count  总大小：$total');
+      fac(count, total);
     });
     return response;
   }
@@ -94,6 +90,36 @@ class ApiService{
       "pageSize": pageSize
     };
     return base(Api.banner, req:req);
+  }
+
+  ///
+  ///查询今天是否签到
+  ///
+  static Future<Response> querySign(String userId)async{
+    Map<String, dynamic> req = {
+      "userId": userId
+    };
+    return base(Api.querySign, req:req);
+  }
+
+  ///
+  ///签到
+  ///
+  static Future<Response> addSign(String userId)async{
+    Map<String, dynamic> req = {
+      "userId": userId
+    };
+    return base(Api.addSign, req:req);
+  }
+
+  ///
+  ///签到记录
+  ///
+  static Future<Response> signRecord(String userId)async{
+    Map<String, dynamic> req = {
+      "userId": userId
+    };
+    return base(Api.signRecord, req:req);
   }
 
   ///
@@ -143,4 +169,35 @@ class ApiService{
     return base(Api.allTag, req:req);
   }
 
+  ///
+  ///根据id获取diary
+  ///
+  static Future<Response> queryDiary(String diaryId)async{
+    Map<String, dynamic> req = {
+      "diaryId": diaryId
+    };
+    return base(Api.queryDiary, req:req);
+  }
+
+  ///
+  ///根据id获取关注、粉丝列表
+  ///
+  static Future<Response> queryLove(String userId, int loveFans)async{
+    Map<String, dynamic> req = {
+      "userId": userId
+    };
+    String url = loveFans==0?Api.queryLove:Api.queryFan;
+    return base(url, req:req);
+  }
+
+  ///
+  ///根据id获取浏览、足迹列表
+  ///
+  static Future<Response> queryFoot(String userId, int loveFans)async{
+    Map<String, dynamic> req = {
+      "userId": userId
+    };
+    String url = loveFans==0?Api.queryBrowse:Api.queryFoot;
+    return base(url, req:req);
+  }
 }
