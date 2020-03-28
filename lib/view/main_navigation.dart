@@ -4,6 +4,7 @@ import 'main_rank.dart';
 import 'main_message.dart';
 import 'main_my.dart';
 import 'main_send.dart';
+import 'package:flutter_lihui/common/my_public.dart';
 
 class MainNavigation extends StatefulWidget{
   @override
@@ -27,7 +28,7 @@ class _MainNavigation extends State<MainNavigation>{
     pages
       ..add(MainHome())
       ..add(MainRank())
-      ..add(MainSend())
+      ..add(Text(''))
       ..add(MainMessage())
       ..add(MainMy());
   }
@@ -45,6 +46,9 @@ class _MainNavigation extends State<MainNavigation>{
       onTap: (i){
         setState(() {
           _currentIndex = i;
+          if (2==i){
+            goTo(context, MainSend());
+          }
         });
       },
       ),

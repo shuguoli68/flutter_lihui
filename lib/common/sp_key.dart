@@ -1,4 +1,4 @@
-//import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SPKey{
   //主题
@@ -15,35 +15,41 @@ class SPKey{
   static const String COOKIE = "COOKIE";
 
   static _share()async{
-//    return await SharedPreferences.getInstance();
+    return await SharedPreferences.getInstance();
   }
 
   static spSetStr(String key, String value) async {
-    _share().setString(key, value);
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    sp.setString(key, value);
   }
 
   static Future<String> spGetStr(String key) async {
-    String a = _share().getString(key);
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    String a = sp.getString(key);
     if(a==null) return "";
     return a;
   }
 
   static spSetBool(String key, bool value) async {
-    _share().setBool(key, value);
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    sp.setBool(key, value);
   }
 
   static Future<bool> spGetBool(String key) async {
-    bool a = _share().getBool(key);
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    bool a = sp.getBool(key);
     if(a == null) return false;
     return a;
   }
 
   static spSetInt(String key, int value) async {
-    _share().setInt(key, value);
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    sp.setInt(key, value);
   }
 
   static Future<int> spGetInt(String key) async {
-    int a = _share().getInt(key);
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    int a = sp.getInt(key);
     if(a == null) return 0;
     return a;
   }
